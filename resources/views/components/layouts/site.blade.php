@@ -17,9 +17,8 @@
 <body class="min-h-screen bg-base-900 font-sans text-ink-300 antialiased">
     <header class="sticky top-0 z-40 border-b border-base-600/60 bg-base-900/80 backdrop-blur">
         <nav class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-3 sm:px-6">
-            <a href="{{ route('home') }}" class="flex items-center gap-2.5">
-                <img src="{{ asset('images/app-icon-128.png') }}" alt="" class="h-8 w-8 rounded-lg">
-                <span class="text-lg font-bold tracking-tight text-ink-100">sound<span class="text-accent">chex</span></span>
+            <a href="{{ route('home') }}" class="flex items-center">
+                <img src="{{ asset('images/logo-light-on-dark-trim.png') }}" alt="SoundChex" class="h-10 w-auto">
             </a>
             <div class="flex items-center gap-4 text-sm font-medium sm:gap-6">
                 <a href="{{ route('home') }}#features" class="hidden text-ink-300 transition-colors hover:text-ink-100 sm:inline">Features</a>
@@ -39,7 +38,7 @@
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
             <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="space-y-3">
-                    <img src="{{ asset('images/logo-light-on-dark.png') }}" alt="SoundChex" class="h-16 w-auto">
+                    <img src="{{ asset('images/logo-light-on-dark-trim.png') }}" alt="SoundChex" class="h-14 w-auto">
                     <p class="text-sm text-ink-500">Your media. Your machine. Every device.</p>
                 </div>
                 <div>
