@@ -51,8 +51,8 @@ Dark-first, matching the app itself.
 | `--sc-ink-100` | `#f4f4f5` | Headlines, body on dark |
 | `--sc-ink-300` | `#b8b8c0` | Secondary text |
 | `--sc-ink-500` | `#8a8a96` | Captions, footer |
-| `--sc-accent` | `#e11d3a` | CTAs, links, the red of the wordmark |
-| `--sc-accent-hot` | `#ff2a4a` | Hover/active accent |
+| `--sc-accent` | `#d95145` | CTAs, links — sampled from the wordmark itself (the app token `#e11d3a` never matched the logo) |
+| `--sc-accent-hot` | `#ef6555` | Hover/active accent |
 
 Motion easing: `cubic-bezier(0.16, 1, 0.3, 1)` (`--sc-ease-out-soft`).
 

@@ -24,8 +24,9 @@
     --sc-ink-300: #b8b8c0;
     --sc-ink-500: #8a8a96;
 
-    --sc-accent: #e11d3a;
-    --sc-accent-hot: #ff2a4a;
+    /* Sampled from the wordmark itself so site and logo can't disagree. */
+    --sc-accent: #d95145;
+    --sc-accent-hot: #ef6555;
 
     --sc-ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
