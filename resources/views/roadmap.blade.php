@@ -37,6 +37,7 @@
                         ['Desktop app', 'available', 'A native window onto your server on macOS, Windows and Linux.'],
                         ['One-click bundled server', 'progress', 'Ship the whole runtime (PHP-FPM + Caddy) inside the app and a headless installer — no dependencies to install.'],
                         ['DLNA output', 'planned', 'Advertise your library to DLNA devices on your network — old smart TVs, game consoles and receivers can play from it with no app.'],
+                        ['Cast to SoundChex (receiver)', 'planned', 'Make SoundChex a target other devices can cast to — a Google Cast receiver and a DLNA renderer, so a phone can send media to a SoundChex screen. (AirPlay receiver is Apple-restricted to hardware.)'],
                     ],
                 ],
                 [
@@ -45,7 +46,7 @@
                     'items' => [
                         ['iOS & iPadOS app', 'available', 'Native browse, playback, offline downloads, playlists, admin and lyrics — background audio and Picture in Picture.'],
                         ['CarPlay', 'planned', 'Your library on the car screen — browse and play with the CarPlay audio interface.'],
-                        ['AirPlay & Chromecast', 'planned', 'Cast what you\'re playing to an Apple TV, HomePod, AirPlay speaker or Chromecast.'],
+                        ['AirPlay & Chromecast (send)', 'planned', 'Cast what you\'re playing to an Apple TV, HomePod, AirPlay speaker or Chromecast.'],
                         ['Apple TV (tvOS)', 'planned', 'The same Swift core with a 10-foot living-room interface.'],
                     ],
                 ],
@@ -55,7 +56,7 @@
                     'items' => [
                         ['Android phone & tablet', 'progress', 'Native Kotlin/Compose client with playback, offline and playlists — parity with iOS.'],
                         ['Android Auto', 'planned', 'Your library on the car\'s dashboard, using the Android Auto media interface.'],
-                        ['Chromecast & AirPlay', 'planned', 'Cast what you\'re playing to a Chromecast, Google TV, or AirPlay device.'],
+                        ['Chromecast & AirPlay (send)', 'planned', 'Cast what you\'re playing to a Chromecast, Google TV, or AirPlay device.'],
                         ['Android TV & Google TV', 'planned', 'A leanback, remote-navigable UI sharing the Android core.'],
                         ['Amazon Fire TV', 'planned', 'The same Android app, distributed through the Amazon Appstore.'],
                     ],
