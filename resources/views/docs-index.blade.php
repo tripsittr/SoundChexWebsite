@@ -12,7 +12,7 @@
                 [
                     'Getting started',
                     'What SoundChex is, and from zero to playing in one sitting.',
-                    ['introduction' => 'Introduction', 'quick-start' => 'Quick start', 'requirements' => 'Requirements'],
+                    ['introduction' => 'Introduction', 'quick-start' => 'Quick start', 'requirements' => 'Requirements', 'github-setup' => 'GitHub & source setup'],
                 ],
                 [
                     'Server',
@@ -26,8 +26,8 @@
                 ],
                 [
                     'Apps — every device',
-                    'The app on each platform, and what to use while yours is coming.',
-                    ['app-macos' => 'macOS', 'app-windows' => 'Windows', 'app-linux' => 'Linux', 'app-ios' => 'iOS', 'app-ipados' => 'iPadOS', 'app-android' => 'Android'],
+                    'Installers, first-launch setup, and the app on each platform.',
+                    ['dmg-setup' => 'macOS setup (.dmg)', 'exe-setup' => 'Windows setup (.exe)', 'app-macos' => 'macOS', 'app-windows' => 'Windows', 'app-linux' => 'Linux', 'app-ios' => 'iOS', 'app-ipados' => 'iPadOS', 'app-android' => 'Android'],
                 ],
                 [
                     'Away from home',

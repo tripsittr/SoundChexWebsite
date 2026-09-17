@@ -23,6 +23,14 @@ class SitePagesTest extends TestCase
             ->assertSeeInOrder(['Getting started', 'Server', 'Your library', 'Apps — every device', 'Away from home', 'People & help']);
     }
 
+    public function test_download_page_renders_both_apps(): void
+    {
+        $this->get(route('download'))
+            ->assertOk()
+            ->assertSeeInOrder(['SoundChex', 'SoundChex Server'])
+            ->assertSee('github.com/tripsittr/SoundChex/releases');
+    }
+
     public function test_policy_pages_render(): void
     {
         $this->get(route('privacy'))->assertOk()->assertSee('Privacy');

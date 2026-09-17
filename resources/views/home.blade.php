@@ -12,7 +12,7 @@
                 one catalogue, one player, self-hosted so your files never leave home.
             </p>
             <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
-                <a href="#download" class="rounded-lg bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hot">
+                <a href="{{ route('download') }}" class="rounded-lg bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hot">
                     Download
                 </a>
                 <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-6 py-3 font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">
@@ -44,7 +44,7 @@
                     <div class="flex flex-col items-center gap-1 rounded-xl border border-base-600 bg-base-700 px-4 py-5">
                         <span class="font-semibold text-ink-100">{{ $platform }}</span>
                         @if ($available)
-                            <a href="https://github.com/tripsittr/SoundChex/releases" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
+                            <a href="{{ route('download') }}" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
                         @else
                             <span class="text-sm text-ink-500">Coming soon</span>
                         @endif

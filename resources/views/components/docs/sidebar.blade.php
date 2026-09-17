@@ -7,6 +7,11 @@
             'quick-start' => 'Quick start',
             'requirements' => 'Requirements',
         ],
+        'Downloads & setup' => [
+            'github-setup' => 'GitHub & source setup',
+            'dmg-setup' => 'macOS setup (.dmg)',
+            'exe-setup' => 'Windows setup (.exe)',
+        ],
         'Server' => [
             'server-macos' => 'Install on macOS',
             'server-windows' => 'Install on Windows',

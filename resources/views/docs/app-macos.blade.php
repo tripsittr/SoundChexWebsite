@@ -8,9 +8,10 @@
 
     <h2>The client</h2>
     <p>
-        Download the <code>.dmg</code> from the
-        <a href="https://github.com/tripsittr/SoundChex/releases">releases page</a>, drag it to
-        Applications, and enter your server's address on the connect screen — a LAN address
+        Get the <code>.dmg</code> from the <a href="{{ route('download') }}">download page</a> and
+        install it — <a href="{{ route('docs.show', 'dmg-setup') }}">macOS setup (.dmg)</a> walks
+        through the drag-to-Applications step and the first-launch Gatekeeper prompt. Then enter
+        your server's address on the connect screen — a LAN address
         (<code>http://192.168.1.20:8000</code>), a tailnet name, or a tunnel hostname all work.
     </p>
     <p>
