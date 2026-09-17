@@ -4,8 +4,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::view('/download', 'download')->name('download');
-Route::view('/privacy', 'privacy')->name('privacy');
-Route::view('/terms', 'terms')->name('terms');
+Route::redirect('/privacy', '/legal/website-privacy')->name('privacy');
+Route::redirect('/terms', '/legal/website-terms')->name('terms');
+
+Route::view('/legal', 'legal-index')->name('legal');
+Route::get('/legal/{slug}', function (string $slug) {
+    abort_unless(view()->exists("legal.{$slug}"), 404);
+
+    return view("legal.{$slug}");
+})->where('slug', '[a-z0-9-]+')->name('legal.show');
 
 Route::view('/docs', 'docs-index')->name('docs');
 Route::get('/docs/{slug}', function (string $slug) {

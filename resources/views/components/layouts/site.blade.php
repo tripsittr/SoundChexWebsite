@@ -65,8 +65,10 @@
                     <ul class="space-y-2 text-sm">
                         <li><a href="https://github.com/tripsittr/SoundChex" class="transition-colors hover:text-ink-100">Source on GitHub</a></li>
                         <li><a href="https://github.com/tripsittr/SoundChex/issues" class="transition-colors hover:text-ink-100">Issues &amp; support</a></li>
-                        <li><a href="{{ route('privacy') }}" class="transition-colors hover:text-ink-100">Privacy</a></li>
-                        <li><a href="{{ route('terms') }}" class="transition-colors hover:text-ink-100">Terms</a></li>
+                        <li><a href="{{ route('legal.show', 'website-privacy') }}" class="transition-colors hover:text-ink-100">Privacy</a></li>
+                        <li><a href="{{ route('legal.show', 'website-terms') }}" class="transition-colors hover:text-ink-100">Terms</a></li>
+                        <li><a href="{{ route('legal.show', 'cookies') }}" class="transition-colors hover:text-ink-100">Cookies</a></li>
+                        <li><a href="{{ route('legal') }}" class="transition-colors hover:text-ink-100">All legal</a></li>
                     </ul>
                 </div>
             </div>

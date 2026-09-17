@@ -233,8 +233,11 @@ Still open:
 3. SVG wordmark + proper 1200×630 OG image.
 4. Confirm domain and hosting (Forge/VPS or Laravel Cloud); `git init` this
    folder as its own repo.
-5. Legal review of the Privacy + Terms drafts (both pages carry a draft
-   badge until then).
+5. Legal review of the drafted legal suite (2026-09-17: 17 documents live
+   under /legal — website terms/privacy/cookies, server terms/privacy, and
+   per-platform app terms+privacy for all six platforms, all encoding the
+   zero-trackers / zero-collection / SCNet-minimal principle; every page
+   carries a draft badge until counsel signs off).
 6. Write the in-progress docs (Integrations, Configuration, Customization
    guides) — the docs page marks them honestly.
 7. SCNet productization: pricing, Cashier/Stripe billing, subscriber terms,

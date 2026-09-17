@@ -31,9 +31,9 @@ class SitePagesTest extends TestCase
             ->assertSee('github.com/tripsittr/SoundChex/releases');
     }
 
-    public function test_policy_pages_render(): void
+    public function test_policy_pages_redirect_into_legal_hub(): void
     {
-        $this->get(route('privacy'))->assertOk()->assertSee('Privacy');
-        $this->get(route('terms'))->assertOk()->assertSee('Terms of use');
+        $this->get(route('privacy'))->assertRedirect('/legal/website-privacy');
+        $this->get(route('terms'))->assertRedirect('/legal/website-terms');
     }
 }
