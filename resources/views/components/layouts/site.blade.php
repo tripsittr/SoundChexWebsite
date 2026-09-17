@@ -23,6 +23,7 @@
             <div class="flex items-center gap-4 text-sm font-medium sm:gap-6">
                 <a href="{{ route('home') }}#features" class="hidden text-ink-300 transition-colors hover:text-ink-100 sm:inline">Features</a>
                 <a href="{{ route('home') }}#pricing" class="hidden text-ink-300 transition-colors hover:text-ink-100 sm:inline">Pricing</a>
+                <a href="{{ route('roadmap') }}" class="hidden text-ink-300 transition-colors hover:text-ink-100 sm:inline">Roadmap</a>
                 <a href="{{ route('docs') }}" class="text-ink-300 transition-colors hover:text-ink-100">Docs</a>
                 <a href="https://github.com/tripsittr/SoundChex" class="text-ink-300 transition-colors hover:text-ink-100">GitHub</a>
                 <a href="{{ route('download') }}" class="rounded-lg bg-accent px-4 py-2 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
@@ -46,6 +47,7 @@
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('home') }}#features" class="transition-colors hover:text-ink-100">Features</a></li>
                         <li><a href="{{ route('home') }}#pricing" class="transition-colors hover:text-ink-100">Pricing &amp; SCNet</a></li>
+                        <li><a href="{{ route('roadmap') }}" class="transition-colors hover:text-ink-100">Roadmap</a></li>
                         <li><a href="{{ route('download') }}" class="transition-colors hover:text-ink-100">Download</a></li>
                         <li><a href="{{ route('home') }}#donate" class="transition-colors hover:text-ink-100">Donate</a></li>
                     </ul>

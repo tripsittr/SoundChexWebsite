@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home')->name('home');
 Route::view('/download', 'download')->name('download');
+Route::view('/roadmap', 'roadmap')->name('roadmap');
 Route::redirect('/privacy', '/legal/website-privacy')->name('privacy');
 Route::redirect('/terms', '/legal/website-terms')->name('terms');
 
