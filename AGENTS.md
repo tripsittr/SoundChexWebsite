@@ -1,47 +1,92 @@
-<laravel-boost-guidelines>
-# Laravel Application
+# AGENTS.md — SoundChex Website
 
-This repository contains a Laravel application. Complete the following setup before working on the user's request.
+The source of truth for how this repository is built and worked on. It mirrors
+the conventions of the app repository (`../SoundChex App/AGENTS.md`) so anyone
+— human or agent — can move between the two without relearning the workflow.
 
-## Prerequisites
+## What this repository is
 
-Verify that PHP and Composer are available:
+The SoundChex marketing site: landing page, download hub, documentation hub,
+and the legal suite. **Laravel 13 + Tailwind v4 + Livewire 4**, served locally
+by Herd at `https://soundchex.test`. It is deliberately mostly-static: SQLite
+holds exactly one table (`waitlist_signups`), and Livewire exists for exactly
+one component (the SCNet waitlist form).
 
-```sh
-php -v
-composer -V
-```
+| Where | What |
+| --- | --- |
+| `resources/views/home.blade.php` | The landing page |
+| `resources/views/download.blade.php` | Download hub — all installer links route through here |
+| `resources/views/docs/*.blade.php` | One file per docs page; slug-routed via `/docs/{slug}` with a view-exists whitelist |
+| `resources/views/components/docs/sidebar.blade.php` | The docs tree — add a page here and in `docs/`, and it is routed, navigable and tested |
+| `resources/views/legal/*.blade.php` | One file per legal document, same slug pattern under `/legal/{slug}` |
+| `resources/views/components/legal/` | Legal sidebar + the shared per-app terms/privacy components |
+| `resources/css/tokens.css` | Brand tokens, copied from the app repo. **Site accent is `#d95145`** — sampled from the wordmark; the app repo still carries `#e11d3a` |
+| `public/legal-pdf/` | Every legal document as a committed PDF |
+| `scripts/build-legal-pdfs.sh` | Regenerates those PDFs from the live pages |
+|  `Documentation & Planning/LandingPagePlan.md` | The original plan and the remaining launch checklist |
 
-If either command is unavailable, detect the user's operating system and install the prerequisites with the appropriate command:
+`CLAUDE.md` carries the Laravel Boost guidelines (Pint, `make:` commands,
+project skills in `.claude/skills/`) — follow them.
 
-macOS:
+## The workflow (same as the app repo)
 
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.5)"
-```
+- **Start at `Documentation & Planning/Status.md`**, then the issue you're
+  working. One thing at a time, finished before the next.
+- **Everything gets an issue** in `Documentation & Planning/Issues.md` *before*
+  the work starts — features, fixes, content changes alike. Website issues are
+  numbered **W-NN** (the app repo uses S-NN; the prefixes never collide).
+  Sections run **In progress → Open → Deferred → Done**, and nothing is
+  deleted: a decision not to do something is worth as much as a fix.
+- **Every change gets a changelog** in `changelog/NNN-name.md`, written when
+  the change lands. Say what is still broken as well as what was done.
+- This repo currently has no remote; changes land as direct commits to
+  `main`, each carrying its issue movement and changelog. **When a GitHub
+  remote exists, adopt the app repo's PR rule wholesale.**
+- **No AI artifacts** in commits or anything published (project-wide rule).
 
-Windows PowerShell:
+## Definition of done for any change
 
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.5'))
-```
+1. Issue moved in `Issues.md`; changelog entry written.
+2. `vendor/bin/pint --dirty --format agent` after PHP edits.
+3. `php artisan test --compact` passes.
+4. `npm run build` after any CSS/JS change — **Tailwind v4 only compiles
+   utilities it has seen, so a new class does nothing until the build runs.**
+5. If a legal page changed: `./scripts/build-legal-pdfs.sh` and commit the
+   regenerated PDFs with the page — the files must never drift from the site.
+6. If the change affects claims the site makes (platform availability,
+   features, install steps, data handling): check the **cross-repo sync**
+   section below.
 
-Linux:
+## Cross-repo sync — how the two agents stay on task
 
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/linux/8.5)"
-```
+The app repo is the source of truth for what the product *does*; this repo is
+the source of truth for what we *say* it does. Neither change is done until
+both agree.
 
-After installation, ask the user to restart their terminal. If the agent needs the restarted shell to continue, ask the user to reopen their terminal and rerun their original prompt.
+- **App-side changes that must reach this site:** a platform actually shipping
+  (flip the landing-page platform row, the `/download` rows, the app docs
+  badge, and the legal page's "published ahead" banner — together); install or
+  setup steps changing (`/docs` pages); any new network behaviour or data
+  handling (the legal suite commits us to updating the document *first* and
+  making it opt-in).
+- **Site-side changes the app repo should know about:** promises added to the
+  legal suite (zero telemetry, downloads in app-private storage, "Data Not
+  Collected" store labels) are product constraints — treat them as spec.
+- The mechanism is the issue files: when a change here needs app-side work,
+  open a W- issue here **and** note the S- issue it pairs with (and vice
+  versa). Each agent reads the other's `Issues.md` — the paths are
+  `../SoundChex App/Documentation & Planning/Issues.md` and this repo's
+  `Documentation & Planning/Issues.md`.
 
-## Agent Setup
+## Content rules
 
-Install Laravel Boost from the application root before making application changes:
-
-```sh
-composer require laravel/boost --dev
-php artisan boost:install
-```
-
-Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
-</laravel-boost-guidelines>
+- **Honesty is the voice.** Unbuilt platforms say "coming soon", untested
+  instructions say so, and the docs keep the app repo's habit of naming the
+  silent failures. Never let marketing copy promise what Status.md denies.
+- **Zero tracking is a commitment, not a default** — the legal suite is
+  specific about it. No analytics, no third-party requests, no non-essential
+  cookies. Anything that would change that changes the legal pages first.
+- Facts about the product come from the app repo's README and docs — link or
+  restate them, don't invent them.
+- Design: brand tokens only (`bg-base-*`, `text-ink-*`, `text-accent`), Figtree
+  via the bunny Vite plugin, dark-first. The wordmark is not recolored.

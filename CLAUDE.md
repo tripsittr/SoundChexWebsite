@@ -1,3 +1,20 @@
+# CLAUDE.md
+
+**Read [AGENTS.md](AGENTS.md) first.** It is the source of truth for how this
+repository is worked on — the workflow (issues before work, changelog per
+change), the definition of done, and how this repo stays in sync with the app
+repo (`../SoundChex App/`).
+
+Then:
+
+- **[Documentation & Planning/Issues.md](Documentation%20&%20Planning/Issues.md)**
+  — every feature, fix and content change we are tracking (W-NN numbering).
+- **[Documentation & Planning/Status.md](Documentation%20&%20Planning/Status.md)**
+  — what exists, what does not, what is next.
+- **[changelog/](changelog/)** — one entry per change, written when it lands.
+
+The Laravel Boost guidelines below govern the code itself.
+
 <laravel-boost-guidelines>
 === foundation rules ===
 
