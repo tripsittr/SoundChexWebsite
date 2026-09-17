@@ -55,4 +55,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project (the SoundChex website) is licensed under the **GNU Affero General
+Public License v3.0 or later (AGPL-3.0-or-later)** — see [LICENSE](LICENSE). All
+SoundChex platforms share this licence. Because the site is served to users over
+a network, any modified, hosted build must offer those users its corresponding
+source (AGPL §13).
+
+The Laravel framework it is built on remains separately [MIT-licensed](https://opensource.org/licenses/MIT).
