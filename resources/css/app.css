@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+ * The palette is defined once, in tokens.css — the same file the app itself
+ * imports — and mapped into Tailwind here. Utilities: bg-base-900, text-ink-300,
+ * text-accent, border-base-600, and so on.
+ */
+@theme {
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-base-900: var(--sc-base-900);
+    --color-base-800: var(--sc-base-800);
+    --color-base-700: var(--sc-base-700);
+    --color-base-600: var(--sc-base-600);
+    --color-base-500: var(--sc-base-500);
+
+    --color-ink-100: var(--sc-ink-100);
+    --color-ink-300: var(--sc-ink-300);
+    --color-ink-500: var(--sc-ink-500);
+
+    --color-accent: var(--sc-accent);
+    --color-accent-hot: var(--sc-accent-hot);
+
+    --ease-out-soft: var(--sc-ease-out-soft);
+}
+
+html {
+    scroll-behavior: smooth;
+}
