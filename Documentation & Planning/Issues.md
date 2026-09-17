@@ -59,6 +59,12 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-22 — Full platform coverage on the home page + cast/car on the roadmap.**
+  The home "Runs where you do" row now shows every target (added Apple TV,
+  Android TV, Fire TV, Roku, Smart TVs, CarPlay & Auto) and links to the roadmap.
+  The roadmap gained CarPlay + AirPlay/Chromecast (Apple app), Android Auto +
+  Chromecast/AirPlay (Android app), and DLNA server output — all Planned.
+  *(changelog/010)*
 - **W-21 — Public product roadmap.** A `/roadmap` page (linked in the nav and
   footer) showing every platform by status — Available / In progress / Planned:
   server + desktop, iOS/iPadOS/tvOS, Android + Android TV/Google TV/Fire TV,
