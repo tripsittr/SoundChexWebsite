@@ -52,7 +52,7 @@
                 @endforeach
             </div>
             <p class="mt-4 text-center text-sm text-ink-500">
-                The server runs anywhere PHP does. <a href="{{ route('docs') }}#install" class="text-ink-300 underline decoration-base-500 transition-colors hover:text-ink-100">Install guide →</a>
+                The server runs anywhere PHP does. <a href="{{ route('docs.show', 'quick-start') }}" class="text-ink-300 underline decoration-base-500 transition-colors hover:text-ink-100">Install guide →</a>
             </p>
         </div>
     </section>
@@ -153,7 +153,7 @@ cp .env.example .env &amp;&amp; php artisan key:generate
 php artisan migrate &amp;&amp; php artisan storage:link
 npm run build &amp;&amp; php artisan serve</code></pre>
                     <p class="mt-3 font-sans text-sm">
-                        <a href="{{ route('docs') }}#install" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
+                        <a href="{{ route('docs.show', 'quick-start') }}" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
                     </p>
                 </div>
             </div>

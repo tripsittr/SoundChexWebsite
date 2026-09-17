@@ -16,11 +16,11 @@ class SitePagesTest extends TestCase
             ->assertSeeLivewire('scnet-waitlist');
     }
 
-    public function test_docs_page_renders_all_sections(): void
+    public function test_docs_index_renders_all_categories(): void
     {
         $this->get(route('docs'))
             ->assertOk()
-            ->assertSeeInOrder(['Install', 'Setup', 'Integrations', 'Configuration', 'Customization']);
+            ->assertSeeInOrder(['Getting started', 'Server', 'Your library', 'Apps — every device', 'Away from home', 'People & help']);
     }
 
     public function test_policy_pages_render(): void

@@ -53,11 +53,11 @@
                 <div>
                     <h3 class="mb-3 text-sm font-semibold text-ink-100">Documentation</h3>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('docs') }}#install" class="transition-colors hover:text-ink-100">Install</a></li>
-                        <li><a href="{{ route('docs') }}#setup" class="transition-colors hover:text-ink-100">Setup</a></li>
-                        <li><a href="{{ route('docs') }}#integrations" class="transition-colors hover:text-ink-100">Integrations</a></li>
-                        <li><a href="{{ route('docs') }}#configuration" class="transition-colors hover:text-ink-100">Configuration</a></li>
-                        <li><a href="{{ route('docs') }}#customization" class="transition-colors hover:text-ink-100">Customization</a></li>
+                        <li><a href="{{ route('docs.show', 'quick-start') }}" class="transition-colors hover:text-ink-100">Quick start</a></li>
+                        <li><a href="{{ route('docs.show', 'server-macos') }}" class="transition-colors hover:text-ink-100">Install the server</a></li>
+                        <li><a href="{{ route('docs.show', 'metadata') }}" class="transition-colors hover:text-ink-100">Integrations</a></li>
+                        <li><a href="{{ route('docs.show', 'remote-access') }}" class="transition-colors hover:text-ink-100">Remote access</a></li>
+                        <li><a href="{{ route('docs.show', 'troubleshooting') }}" class="transition-colors hover:text-ink-100">Troubleshooting</a></li>
                     </ul>
                 </div>
                 <div>
