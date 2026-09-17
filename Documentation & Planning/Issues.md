@@ -59,6 +59,7 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-24 — Roadmap as a branching tree.** Redesigned /roadmap from a flat block list into a visual tree — a SoundChex root, a central trunk, platform branches alternating left/right, feature leaves with connectors. Pure-CSS connectors, collapses to one column on mobile. *(changelog/012)*
 - **W-23 — Cast-receiver on the roadmap.** Added "Cast to SoundChex (receiver)" (Google Cast receiver + DLNA renderer; AirPlay receiver is Apple-hardware-only) and labelled the sender items "(send)". *(changelog/011)*
 - **W-22 — Full platform coverage on the home page + cast/car on the roadmap.**
   The home "Runs where you do" row now shows every target (added Apple TV,
