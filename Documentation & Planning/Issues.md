@@ -59,6 +59,7 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-23 — Cast-receiver on the roadmap.** Added "Cast to SoundChex (receiver)" (Google Cast receiver + DLNA renderer; AirPlay receiver is Apple-hardware-only) and labelled the sender items "(send)". *(changelog/011)*
 - **W-22 — Full platform coverage on the home page + cast/car on the roadmap.**
   The home "Runs where you do" row now shows every target (added Apple TV,
   Android TV, Fire TV, Roku, Smart TVs, CarPlay & Auto) and links to the roadmap.
