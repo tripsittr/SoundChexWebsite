@@ -59,6 +59,11 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-21 — Public product roadmap.** A `/roadmap` page (linked in the nav and
+  footer) showing every platform by status — Available / In progress / Planned:
+  server + desktop, iOS/iPadOS/tvOS, Android + Android TV/Google TV/Fire TV,
+  smart TVs (webOS/Tizen/SmartCast) + Roku, SCNet, and integrations. Mirrors the
+  per-repo roadmaps and S-152. *(changelog/009)*
 - **W-20 — AGPLv3 licence.** The website adopts the AGPL-3.0-or-later licence
   shared by all SoundChex platforms: official `LICENSE`, SPDX headers on every
   first-party source file, `composer.json`/`package.json` licence set, and the
