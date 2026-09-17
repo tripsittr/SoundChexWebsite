@@ -59,6 +59,10 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-20 — AGPLv3 licence.** The website adopts the AGPL-3.0-or-later licence
+  shared by all SoundChex platforms: official `LICENSE`, SPDX headers on every
+  first-party source file, `composer.json`/`package.json` licence set, and the
+  stock-Laravel README licence section rewritten. *(changelog/008)*
 - **W-01 — Landing page.** Hero, platform row (honest badges), six feature
   cards, profiles strip, pricing (Self-hosted free / SCNet coming soon),
   donations + quickstart, footer. Livewire SCNet waitlist storing emails in
