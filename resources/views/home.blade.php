@@ -40,9 +40,15 @@
                     ['Windows', false],
                     ['Linux', false],
                     ['Android', false],
+                    ['Apple TV', false],
+                    ['Android TV', false],
+                    ['Fire TV', false],
+                    ['Roku', false],
+                    ['Smart TVs', false],
+                    ['CarPlay & Auto', false],
                 ] as [$platform, $available])
                     <div class="flex flex-col items-center gap-1 rounded-xl border border-base-600 bg-base-700 px-4 py-5">
-                        <span class="font-semibold text-ink-100">{{ $platform }}</span>
+                        <span class="text-center font-semibold text-ink-100">{{ $platform }}</span>
                         @if ($available)
                             <a href="{{ route('download') }}" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
                         @else
@@ -52,7 +58,9 @@
                 @endforeach
             </div>
             <p class="mt-4 text-center text-sm text-ink-500">
-                The server runs anywhere PHP does. <a href="{{ route('docs.show', 'quick-start') }}" class="text-ink-300 underline decoration-base-500 transition-colors hover:text-ink-100">Install guide →</a>
+                The server runs anywhere PHP does. See the full
+                <a href="{{ route('roadmap') }}" class="text-ink-300 underline decoration-base-500 transition-colors hover:text-ink-100">roadmap →</a>
+                or the <a href="{{ route('docs.show', 'quick-start') }}" class="text-ink-300 underline decoration-base-500 transition-colors hover:text-ink-100">install guide →</a>
             </p>
         </div>
     </section>
