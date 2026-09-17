@@ -15,7 +15,13 @@
             </div>
         </aside>
         <article class="doc-prose min-w-0">
-            <p class="mb-4 text-xs font-semibold tracking-wide text-ink-500 uppercase">Effective {{ $updated }} · Operated by Tripsittr LLC · <span class="text-accent">Draft pending legal review</span></p>
+            @php
+                $legalSlug = request()->route('slug');
+                $pdfExists = $legalSlug && file_exists(public_path("legal-pdf/{$legalSlug}.pdf"));
+            @endphp
+            <p class="mb-4 text-xs font-semibold tracking-wide text-ink-500 uppercase">
+                Effective {{ $updated }} · Operated by Tripsittr LLC · <span class="text-accent">Draft pending legal review</span>@if ($pdfExists) · <a href="{{ asset("legal-pdf/{$legalSlug}.pdf") }}" class="text-ink-300 underline decoration-base-500 hover:text-ink-100">PDF</a>@endif
+            </p>
             {{ $slot }}
         </article>
     </div>

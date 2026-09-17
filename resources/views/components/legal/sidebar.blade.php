@@ -9,19 +9,29 @@
             'server-terms' => 'Server Terms',
             'server-privacy' => 'Server Privacy',
         ],
-        'The apps' => [
-            'macos-terms' => 'macOS — Terms',
-            'macos-privacy' => 'macOS — Privacy',
-            'windows-terms' => 'Windows — Terms',
-            'windows-privacy' => 'Windows — Privacy',
-            'linux-terms' => 'Linux — Terms',
-            'linux-privacy' => 'Linux — Privacy',
-            'ios-terms' => 'iOS — Terms',
-            'ios-privacy' => 'iOS — Privacy',
-            'ipados-terms' => 'iPadOS — Terms',
-            'ipados-privacy' => 'iPadOS — Privacy',
-            'android-terms' => 'Android — Terms',
-            'android-privacy' => 'Android — Privacy',
+        'macOS app' => [
+            'macos-terms' => 'Terms',
+            'macos-privacy' => 'Privacy',
+        ],
+        'Windows app' => [
+            'windows-terms' => 'Terms',
+            'windows-privacy' => 'Privacy',
+        ],
+        'Linux app' => [
+            'linux-terms' => 'Terms',
+            'linux-privacy' => 'Privacy',
+        ],
+        'iOS app' => [
+            'ios-terms' => 'Terms',
+            'ios-privacy' => 'Privacy',
+        ],
+        'iPadOS app' => [
+            'ipados-terms' => 'Terms',
+            'ipados-privacy' => 'Privacy',
+        ],
+        'Android app' => [
+            'android-terms' => 'Terms',
+            'android-privacy' => 'Privacy',
         ],
     ];
     $current = request()->route('slug');

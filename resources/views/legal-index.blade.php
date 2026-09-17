@@ -7,6 +7,11 @@
             SCNet, we hold no user data at all; inside SCNet, only what the service legally and
             functionally requires.
         </p>
+        <p class="mt-3 max-w-2xl text-sm text-ink-500">
+            Every document is also stored as a PDF in the site's repository — served at
+            <code class="rounded bg-base-700 px-1.5 py-0.5 font-mono text-xs">/legal-pdf/&lt;name&gt;.pdf</code>
+            and linked from each page's banner — so the policies are versioned files, not just pages.
+        </p>
 
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div class="rounded-xl border border-base-600 bg-base-700 p-6">
