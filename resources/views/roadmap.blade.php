@@ -62,9 +62,10 @@
                         $it->title,
                         $statusClass[$it->status] ?? 'planned',
                         $it->roadmapSummary(),
-                        // The panel's updated_at — when the entry last changed —
-                        // so the roadmap shows how fresh each item is.
-                        optional($it->updated_at)->format('M j, Y'),
+                        // activity_on — the date the item's STATUS last changed
+                        // (git-backfilled for the imported backlog, then advanced
+                        // whenever status changes). Falls back to updated_at.
+                        optional($it->activity_on ?? $it->updated_at)->format('M j, Y'),
                     ])->all(),
                 ];
             }
