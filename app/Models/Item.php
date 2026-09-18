@@ -16,6 +16,7 @@ class Item extends Model
     protected $fillable = [
         'title', 'description', 'platform', 'repo', 'type', 'status',
         'priority', 'published', 'ref', 'public_summary', 'sort_order',
+        'activity_on',
     ];
 
     protected function casts(): array
@@ -23,7 +24,23 @@ class Item extends Model
         return [
             'published' => 'boolean',
             'sort_order' => 'integer',
+            'activity_on' => 'date',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        // `activity_on` tracks when the item last changed STATUS — that is the
+        // signal the roadmap shows, not "edited the wording today". So it moves
+        // to today only when `status` is the field that changed (on create, or
+        // whenever status becomes dirty). The git backfill sets the original
+        // date for the imported backlog; from here on, a status change advances
+        // it. `saveQuietly` in the backfill command bypasses this deliberately.
+        static::saving(function (Item $item): void {
+            if ($item->isDirty('status') || ($item->exists === false && $item->activity_on === null)) {
+                $item->activity_on = now()->toDateString();
+            }
+        });
     }
 
     /**
