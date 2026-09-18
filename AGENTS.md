@@ -32,21 +32,23 @@ project skills in `.claude/skills/`) — follow them.
 
 - **Start at `Documentation & Planning/Status.md`**, then the issue you're
   working. One thing at a time, finished before the next.
-- **Everything gets an issue** in `Documentation & Planning/Issues.md` *before*
-  the work starts — features, fixes, content changes alike. Website issues are
-  numbered **W-NN** (the app repo uses S-NN; the prefixes never collide).
-  Sections run **In progress → Open → Deferred → Done**, and nothing is
-  deleted: a decision not to do something is worth as much as a fix.
+- **Everything gets an issue** in the admin **Tracker** (this repo's own
+  Filament panel, `/admin` → Tracker / Board) *before* the work starts —
+  features, fixes, content changes alike, **not** in `Documentation &
+  Planning/Issues.md` (now a pointer). Add it in the panel or with
+  `php artisan track:issue`. Website work is `platform=web`,
+  `repo=SoundChexWebsite`; historical W-NN ids live on the item's `ref`. Advance
+  the item's `status` as work moves (Planned → In progress → Shipped/Done, or
+  Deferred); nothing is deleted.
 - **Every change gets a changelog** in `changelog/NNN-name.md`, written when
   the change lands. Say what is still broken as well as what was done.
-- This repo currently has no remote; changes land as direct commits to
-  `main`, each carrying its issue movement and changelog. **When a GitHub
-  remote exists, adopt the app repo's PR rule wholesale.**
+- **Everything reaches `main` through a pull request** (the repo has a GitHub
+  remote now), each carrying its tracker update and changelog.
 - **No AI artifacts** in commits or anything published (project-wide rule).
 
 ## Definition of done for any change
 
-1. Issue moved in `Issues.md`; changelog entry written.
+1. Tracker item logged/advanced; changelog entry written.
 2. `vendor/bin/pint --dirty --format agent` after PHP edits.
 3. `php artisan test --compact` passes.
 4. `npm run build` after any CSS/JS change — **Tailwind v4 only compiles
@@ -72,11 +74,11 @@ both agree.
 - **Site-side changes the app repo should know about:** promises added to the
   legal suite (zero telemetry, downloads in app-private storage, "Data Not
   Collected" store labels) are product constraints — treat them as spec.
-- The mechanism is the issue files: when a change here needs app-side work,
-  open a W- issue here **and** note the S- issue it pairs with (and vice
-  versa). Each agent reads the other's `Issues.md` — the paths are
-  `../SoundChex App/Documentation & Planning/Issues.md` and this repo's
-  `Documentation & Planning/Issues.md`.
+- The mechanism is the **Tracker**: all repos' work lives in one `items` table
+  (this repo's admin panel). When a change here needs app-side work, add a
+  tracker item with the right `platform`/`repo`, and reference the paired item's
+  `ref` in the description. One board shows every platform's work, so there is no
+  cross-file syncing any more.
 
 ## Content rules
 
