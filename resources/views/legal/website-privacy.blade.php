@@ -4,14 +4,14 @@
 
     <h2>The whole policy, in three sentences</h2>
     <div class="doc-note">
-        <p><strong>This site runs zero trackers and zero analytics, sets only the cookies it technically cannot work without, and makes no requests to third-party services from your browser.</strong> The only personal data it can ever hold is an email address you volunteer to the SCNet waitlist. We do not sell, share, rent or enrich anything, because there is nothing to sell, share, rent or enrich.</p>
+        <p><strong>This site runs zero trackers and zero analytics, sets only the cookies it technically cannot work without, and embeds no third-party services in its pages.</strong> Its pages load nothing from anyone but us; the only time your browser reaches another service is when <em>you</em> click a link we clearly label — a download or a source link that sends you to GitHub. The only personal data it can ever hold is an email address you volunteer to the SCNet waitlist. We do not sell, share, rent or enrich anything, because there is nothing to sell, share, rent or enrich.</p>
     </div>
 
     <h2>1. Data we collect automatically: none</h2>
     <ul>
         <li><strong>No analytics.</strong> No Google Analytics, no Plausible, no self-hosted analytics, nothing. We do not count you, fingerprint you, or measure you.</li>
         <li><strong>No trackers, no ads, no pixels, no beacons.</strong></li>
-        <li><strong>No third-party requests.</strong> Fonts, styles, scripts and images are all served from this domain. Your browser talks to us and only to us.</li>
+        <li><strong>No third-party requests from our pages.</strong> Fonts, styles, scripts and images are all served from this domain — our pages embed no third-party trackers, CDNs or widgets. The one exception is a link you choose to click: our download buttons and "source" links point to <a href="https://github.com/tripsittr/SoundChex">GitHub</a>, so following one sends your browser to GitHub, which has its own <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>. We host the software's releases there; we do not control what GitHub logs.</li>
         <li><strong>Server logs.</strong> Like any web server, ours writes technical logs (requested URL, timestamp, IP address) for security and debugging. They are used for nothing else, correlated with nothing, and routinely deleted. They never leave our infrastructure.</li>
     </ul>
 
