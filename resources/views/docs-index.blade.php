@@ -39,6 +39,11 @@
                     'Profiles, kids mode, search — and what to check when something breaks.',
                     ['profiles' => 'Profiles & kids mode', 'search' => 'Search', 'troubleshooting' => 'Troubleshooting'],
                 ],
+                [
+                    'About',
+                    'The open-source projects SoundChex is built on, and the people who made them.',
+                    ['credits' => 'Open-source credits'],
+                ],
             ] as [$title, $blurb, $links])
                 <div class="rounded-xl border border-base-600 bg-base-700 p-6">
                     <h2 class="font-bold text-ink-100">{{ $title }}</h2>
