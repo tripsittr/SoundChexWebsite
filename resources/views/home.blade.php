@@ -32,24 +32,24 @@
     <section id="download" class="border-y border-base-600/60 bg-base-800">
         <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
             <h2 class="text-center text-sm font-semibold tracking-wide text-ink-500 uppercase">Runs where you do</h2>
+            @php
+                // DB-driven (Content → Platforms). rescue() so a fresh install
+                // before migration falls back rather than 500-ing.
+                $platforms = rescue(fn () => \App\Models\Platform::ordered(), collect(), false);
+                // Fallback to a sensible default list if none are configured yet.
+                if ($platforms->isEmpty()) {
+                    $platforms = collect([
+                        ['name' => 'macOS', 'available' => true], ['name' => 'iOS', 'available' => true],
+                        ['name' => 'iPadOS', 'available' => false], ['name' => 'Windows', 'available' => false],
+                        ['name' => 'Linux', 'available' => false], ['name' => 'Android', 'available' => false],
+                    ])->map(fn ($p) => (object) $p);
+                }
+            @endphp
             <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-                @foreach ([
-                    ['macOS', true],
-                    ['iOS', true],
-                    ['iPadOS', false],
-                    ['Windows', false],
-                    ['Linux', false],
-                    ['Android', false],
-                    ['Apple TV', false],
-                    ['Android TV', false],
-                    ['Fire TV', false],
-                    ['Roku', false],
-                    ['Smart TVs', false],
-                    ['CarPlay & Auto', false],
-                ] as [$platform, $available])
+                @foreach ($platforms as $platform)
                     <div class="flex flex-col items-center gap-1 rounded-xl border border-base-600 bg-base-700 px-4 py-5">
-                        <span class="text-center font-semibold text-ink-100">{{ $platform }}</span>
-                        @if ($available)
+                        <span class="text-center font-semibold text-ink-100">{{ $platform->name }}</span>
+                        @if ($platform->available)
                             <a href="{{ route('download') }}" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
                         @else
                             <span class="text-sm text-ink-500">Coming soon</span>

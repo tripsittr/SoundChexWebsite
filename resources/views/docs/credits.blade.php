@@ -4,30 +4,13 @@
     $data = json_decode(file_get_contents(resource_path('data/credits.json')), true);
     $total = collect($data['ecosystems'])->sum(fn ($e) => count($e['packages']));
 
-    // Curated marquee — the ecosystems and frameworks SoundChex leans on most.
-    // Each has its actual logo (self-hosted SVG from Simple Icons, CC0), tinted
-    // to its brand colour on a light tile; getID3 has no logo, so it keeps a
-    // monogram. The long tail of packages below is credited by name + licence.
-    // [name, brand colour, logo slug (null = monogram), monogram, role, url]
-    $marquee = [
-        ['Laravel', '#FF2D20', 'laravel', 'La', 'PHP framework', 'https://laravel.com'],
-        ['PHP', '#777BB4', 'php', 'php', 'The language', 'https://php.net'],
-        ['Filament', '#FDAE4B', 'filament', 'Fi', 'Admin panels', 'https://filamentphp.com'],
-        ['Livewire', '#FB70A9', 'livewire', 'Lw', 'Reactive UI', 'https://livewire.laravel.com'],
-        ['Tailwind CSS', '#38BDF8', 'tailwindcss', 'Tw', 'Styling', 'https://tailwindcss.com'],
-        ['Vite', '#646CFF', 'vite', 'Vt', 'Build tool', 'https://vitejs.dev'],
-        ['Alpine.js', '#77C1D2', 'alpinedotjs', 'Aj', 'Interactivity', 'https://alpinejs.dev'],
-        ['Tauri', '#FFC131', 'tauri', 'Ta', 'Desktop shell', 'https://tauri.app'],
-        ['Rust', '#DEA584', 'rust', 'Rs', 'Systems language', 'https://rust-lang.org'],
-        ['getID3', '#4B9CD3', null, 'id3', 'Media tags', 'https://github.com/JamesHeinrich/getID3'],
-        ['Symfony', '#000000', 'symfony', 'Sy', 'PHP components', 'https://symfony.com'],
-        ['SQLite', '#003B57', 'sqlite', 'Sq', 'Database', 'https://sqlite.org'],
-        ['Swift', '#F05138', 'swift', 'Sw', 'iOS, iPadOS & tvOS', 'https://swift.org'],
-        ['Kotlin', '#7F52FF', 'kotlin', 'Kt', 'Android language', 'https://kotlinlang.org'],
-        ['Jetpack Compose', '#4285F4', 'jetpackcompose', 'Jc', 'Android UI', 'https://developer.android.com/jetpack/compose'],
-        ['Android', '#3DDC84', 'android', 'An', 'Android, TV & Fire TV', 'https://developer.android.com'],
-        ['Roku (BrightScript)', '#662D91', 'roku', 'Rk', 'Roku app', 'https://developer.roku.com'],
-    ];
+    // Curated marquee — managed in the admin panel (Content → Credits marquee).
+    // Each tile has its actual logo (self-hosted SVG under public/images/credits),
+    // tinted to its brand colour, with a monogram fallback. Mapped into the
+    // [name, colour, slug, monogram, role, url] tuple the render loop expects.
+    $marquee = rescue(fn () => \App\Models\Framework::ordered(), collect(), false)
+        ->map(fn ($f) => [$f->name, $f->color, $f->logo_slug, $f->mono, $f->role, $f->url])
+        ->all();
 @endphp
 
 <x-layouts.docs title="Open-source credits">
