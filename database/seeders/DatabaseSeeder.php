@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         // so RoadmapSeeder is only needed on its own.
         $this->call(ItemsSeeder::class);
         $this->call(ContentSeeder::class);
+        $this->call(ChangelogSeeder::class);
     }
 }
