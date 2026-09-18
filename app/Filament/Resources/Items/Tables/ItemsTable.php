@@ -9,6 +9,7 @@ use App\Models\Item;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -82,8 +83,16 @@ class ItemsTable
                 TernaryFilter::make('published')->label('On public roadmap'),
             ])
             ->recordActions([
+                ViewAction::make()
+                    ->slideOver()
+                    ->modalHeading('Item'),
                 EditAction::make(),
             ])
+            // Clicking a row opens the pretty slide-over rather than the edit page.
+            // recordUrl(null) is required so the row action wins over the
+            // resource's default edit URL.
+            ->recordAction('view')
+            ->recordUrl(null)
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
