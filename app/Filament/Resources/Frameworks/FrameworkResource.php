@@ -1,0 +1,59 @@
+<?php
+
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 SoundChex
+
+namespace App\Filament\Resources\Frameworks;
+
+use App\Filament\Resources\Frameworks\Pages\CreateFramework;
+use App\Filament\Resources\Frameworks\Pages\EditFramework;
+use App\Filament\Resources\Frameworks\Pages\ListFrameworks;
+use App\Filament\Resources\Frameworks\Schemas\FrameworkForm;
+use App\Filament\Resources\Frameworks\Tables\FrameworksTable;
+use App\Models\Framework;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+
+class FrameworkResource extends Resource
+{
+    protected static ?string $model = Framework::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquares2x2;
+
+    protected static ?string $navigationLabel = 'Credits marquee';
+
+    protected static ?string $modelLabel = 'framework';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+
+    protected static ?int $navigationSort = 30;
+
+    public static function form(Schema $schema): Schema
+    {
+        return FrameworkForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return FrameworksTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListFrameworks::route('/'),
+            'create' => CreateFramework::route('/create'),
+            'edit' => EditFramework::route('/{record}/edit'),
+        ];
+    }
+}

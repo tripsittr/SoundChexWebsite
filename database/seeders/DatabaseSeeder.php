@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         // now the source of truth). ItemsSeeder covers the published roadmap too,
         // so RoadmapSeeder is only needed on its own.
         $this->call(ItemsSeeder::class);
+        $this->call(ContentSeeder::class);
     }
 }
