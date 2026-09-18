@@ -12,7 +12,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Behind a TLS-terminating proxy (Tailscale Funnel now; a real reverse
+        // proxy in production), honour X-Forwarded-* so generated URLs — assets
+        // especially — use https and the public host, not the plain-http origin
+        // the proxy forwards to. Without this the site loads over https but its
+        // CSS/JS come out as http and the browser blocks them (unstyled page).
+        $middleware->trustProxies(at: '*', headers: Request::HEADER_X_FORWARDED_FOR
+            | Request::HEADER_X_FORWARDED_HOST
+            | Request::HEADER_X_FORWARDED_PORT
+            | Request::HEADER_X_FORWARDED_PROTO);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
