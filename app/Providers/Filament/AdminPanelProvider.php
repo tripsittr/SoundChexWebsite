@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\TrackerOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -11,7 +12,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,8 +28,22 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('SoundChex')
+            ->brandLogo(asset('images/logo-light-on-dark-trim.png'))
+            ->brandLogoHeight('1.6rem')
+            ->favicon(asset('favicon.ico'))
+            ->darkMode(true, isForced: true)
+            ->font('Figtree')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
-                'primary' => Color::Amber,
+                // SoundChex brand accent (#d95145) as the primary ramp.
+                'primary' => [
+                    50 => '#fdf3f2', 100 => '#fbe6e4', 200 => '#f6c9c4',
+                    300 => '#efa39b', 400 => '#e5766b', 500 => '#d95145',
+                    600 => '#c33d32', 700 => '#a32f27', 800 => '#872a24',
+                    900 => '#712923', 950 => '#3d110d',
+                ],
+                'gray' => Color::Zinc,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -38,8 +52,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
+                TrackerOverview::class,
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

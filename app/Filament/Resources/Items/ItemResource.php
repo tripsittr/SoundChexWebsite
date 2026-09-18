@@ -25,6 +25,8 @@ class ItemResource extends Resource
 
     protected static ?string $navigationLabel = 'Tracker';
 
+    protected static ?string $pluralModelLabel = 'Tracker';
+
     protected static ?string $modelLabel = 'item';
 
     protected static ?string $recordTitleAttribute = 'title';
