@@ -12,7 +12,7 @@
         <tr><th>Where</th><th>What</th></tr>
         <tr><td><strong>Releases</strong></td><td>Compiled installers — the <code>.dmg</code>s for macOS and, when they ship, the <code>.exe</code>s for Windows — for both <strong>SoundChex</strong> (the client) and <strong>SoundChex Server</strong>. Each release carries its changelog. This is what the <a href="{{ route('download') }}">download page</a> links to.</td></tr>
         <tr><td><strong>Issues</strong></td><td>The support channel. Bugs, questions and feature requests all go here — there is no separate forum.</td></tr>
-        <tr><td><strong>The code</strong></td><td>MIT-licensed. The server (Laravel/PHP), the web interface, and the Tauri shells all live in the one repository.</td></tr>
+        <tr><td><strong>The code</strong></td><td>AGPLv3-licensed. The server (Laravel/PHP), the web interface, and the Tauri shells all live in the one repository.</td></tr>
         <tr><td><strong><code>docs/</code></strong></td><td>The developer-facing docs, kept next to the code they describe.</td></tr>
     </table>
     <div class="doc-note">

@@ -9,7 +9,7 @@
     <p>Information about SoundChex, documentation, download links, and a waitlist for SCNet (the SoundChex Network). Using the site requires no account and no personal information. The only thing you can submit is an email address to the SCNet waitlist, and that is voluntary.</p>
 
     <h2>3. The software is licensed separately</h2>
-    <p>SoundChex — the server and the apps — is open-source software released under the MIT License. The license text in the <a href="https://github.com/tripsittr/SoundChex">repository</a> is the complete agreement for the software itself. Nothing on this website narrows, extends or replaces the MIT License. Downloading the software from links on this site does not create any additional agreement with us beyond that license.</p>
+    <p>SoundChex — the server and the apps — is open-source software released under the GNU Affero General Public License, version 3 or later (AGPLv3). The <code>LICENSE</code> file in the <a href="https://github.com/tripsittr/SoundChex">repository</a> is the complete agreement for the software itself. Nothing on this website narrows, extends or replaces the AGPLv3. Downloading the software from links on this site does not create any additional agreement with us beyond that license.</p>
 
     <h2>4. Your media is your responsibility</h2>
     <p>SoundChex is a library for media files you already have; it neither acquires them nor helps you to. Nothing on this site is an invitation to infringe copyright, and we make no representation that any particular use of your files is lawful where you live.</p>

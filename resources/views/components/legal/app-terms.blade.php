@@ -6,8 +6,8 @@
     @endunless
     <p class="doc-lead">These terms cover the SoundChex app for {{ $platform }} — the client you browse, play and read with. The server it connects to has <a href="{{ route('legal.show', 'server-terms') }}">its own terms</a>.</p>
 
-    <h2>1. The license is the MIT License</h2>
-    <p>The app is open-source software released by Tripsittr LLC under the MIT License; the license text in the <a href="https://github.com/tripsittr/SoundChex">repository</a> is the complete and only license. It is provided "as is", without warranty of any kind.</p>
+    <h2>1. The license is the GNU AGPLv3</h2>
+    <p>The app is open-source software released by Tripsittr LLC under the GNU Affero General Public License, version 3 or later (AGPLv3); the <code>LICENSE</code> file in the <a href="https://github.com/tripsittr/SoundChex">repository</a> is the complete and only license. You may use, study, modify and share it under those terms; if you distribute or network-host a modified version, the AGPL requires you to offer its users the corresponding source. It is provided "as is", without warranty of any kind.</p>
 
     <h2>2. The app is a window onto your server</h2>
     <ul>
@@ -25,7 +25,7 @@
     {{ $slot }}
 
     <h2>No warranty; limitation of liability</h2>
-    <p>As the MIT License states: no warranty, express or implied. To the maximum extent permitted by law, Tripsittr LLC and contributors are not liable for damages arising from the app or its use.</p>
+    <p>As the AGPLv3 states: no warranty, express or implied. To the maximum extent permitted by law, Tripsittr LLC and contributors are not liable for damages arising from the app or its use.</p>
 
     <h2>SCNet</h2>
     <p>If and when this app gains the option to connect through SCNet (the SoundChex Network), that connection will be governed by SCNet's own subscriber terms, published before the service opens — nothing in these terms signs you up for anything.</p>

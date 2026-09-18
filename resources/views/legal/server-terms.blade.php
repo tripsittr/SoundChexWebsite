@@ -2,8 +2,8 @@
     <h1>SoundChex Server — Terms</h1>
     <p class="doc-lead">These terms cover the SoundChex server software — the application that hosts your library on your own machine, whether installed from a <a href="{{ route('docs.show', 'dmg-setup') }}">packaged installer</a> or <a href="{{ route('docs.show', 'github-setup') }}">from source</a>.</p>
 
-    <h2>1. The license is the MIT License</h2>
-    <p>The server is open-source software released by Tripsittr LLC under the MIT License. The license text in the repository is the complete and only license. In plain words: you may use, copy, modify and redistribute it, for any purpose, provided the license notice is kept; and it is provided "as is", without warranty of any kind.</p>
+    <h2>1. The license is the GNU AGPLv3</h2>
+    <p>The server is open-source software released by Tripsittr LLC under the GNU Affero General Public License, version 3 or later (AGPLv3). The <code>LICENSE</code> file in the repository is the complete and only license. In plain words: you may use, copy, modify and redistribute it, for any purpose, provided you keep it under the AGPLv3 and pass the same freedoms on — and, because the AGPL covers software used over a network, if you run a modified version that others reach over a network, you must offer those users its corresponding source. It is provided "as is", without warranty of any kind.</p>
 
     <h2>2. It runs on your hardware, under your control</h2>
     <ul>
@@ -22,11 +22,11 @@
     <p>The software includes backup and transfer tooling (<a href="{{ route('docs.show', 'moving-a-server') }}">documented here</a>), but running it, verifying it and keeping copies is your operation. Software that moves and deletes real files deserves tested backups.</p>
 
     <h2>6. No warranty; limitation of liability</h2>
-    <p>As the MIT License states: the software is provided "as is", without warranty of any kind, express or implied. To the maximum extent permitted by law, Tripsittr LLC and contributors are not liable for any claim or damages arising from the software or its use — including data loss. (Then again, see section 5.)</p>
+    <p>As the AGPLv3 states: the software is provided "as is", without warranty of any kind, express or implied. To the maximum extent permitted by law, Tripsittr LLC and contributors are not liable for any claim or damages arising from the software or its use — including data loss. (Then again, see section 5.)</p>
 
     <h2>7. Updates</h2>
     <p>Updates are published as source and as releases; nothing is pushed to your machine. Applying them — and reading each release's changelog first — is your call.</p>
 
     <h2>8. These terms don't expand the license</h2>
-    <p>If anything here conflicts with the MIT License for the software itself, the MIT License wins. These terms exist to be specific about responsibilities, not to take back what the license grants.</p>
+    <p>If anything here conflicts with the AGPLv3 for the software itself, the AGPLv3 wins. These terms exist to be specific about responsibilities, not to take back what the license grants.</p>
 </x-layouts.legal>

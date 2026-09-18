@@ -76,7 +76,7 @@
             </div>
             <div class="mt-10 border-t border-base-600/60 pt-6 text-xs text-ink-500">
                 <p class="max-w-2xl">
-                    SoundChex is MIT-licensed. Your media is not ours and not our business — SoundChex is a
+                    SoundChex is AGPLv3-licensed. Your media is not ours and not our business — SoundChex is a
                     library for files you already have; it neither acquires them nor helps you to.
                 </p>
                 <p class="mt-3">&copy; {{ date('Y') }} Tripsittr LLC. SoundChex&trade; is a trademark of Tripsittr LLC.</p>
