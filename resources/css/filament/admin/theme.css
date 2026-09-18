@@ -11,6 +11,14 @@
 
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
 
+/*
+ * Scan our custom Filament pages/resources so the Tailwind classes used there
+ * (the Kanban board, custom Blade) are included in the compiled theme. Without
+ * this, a custom page renders unstyled.
+ */
+@source '../../../../app/Filament';
+@source '../../../../resources/views/filament';
+
 @theme {
     --font-family-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
 }

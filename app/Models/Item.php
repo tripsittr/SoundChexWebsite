@@ -58,10 +58,13 @@ class Item extends Model
         'chore' => 'Chore',
     ];
 
+    // Note on `available` vs `done`: "Shipped" is the public-facing complete
+    // state (users can use it; it appears on the public roadmap as "Available").
+    // "Done" is the internal complete state (a closed ticket, not on the roadmap).
     public const STATUSES = [
         'planned' => 'Planned',
         'in-progress' => 'In progress',
-        'available' => 'Available',
+        'available' => 'Shipped',
         'done' => 'Done',
         'deferred' => 'Deferred',
     ];
