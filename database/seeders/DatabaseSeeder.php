@@ -5,7 +5,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,11 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // The full tracked backlog (imported from the repos' Markdown trackers,
+        // now the source of truth). ItemsSeeder covers the published roadmap too,
+        // so RoadmapSeeder is only needed on its own.
+        $this->call(ItemsSeeder::class);
     }
 }
