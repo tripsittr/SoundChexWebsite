@@ -26,7 +26,7 @@
         ['Kotlin', '#7F52FF', 'kotlin', 'Kt', 'Android language', 'https://kotlinlang.org'],
         ['Jetpack Compose', '#4285F4', 'jetpackcompose', 'Jc', 'Android UI', 'https://developer.android.com/jetpack/compose'],
         ['Android', '#3DDC84', 'android', 'An', 'Android, TV & Fire TV', 'https://developer.android.com'],
-        ['Roku', '#662D91', 'roku', 'Rk', 'Roku channels', 'https://developer.roku.com'],
+        ['Roku (BrightScript)', '#662D91', 'roku', 'Rk', 'Roku app', 'https://developer.roku.com'],
     ];
 @endphp
 
