@@ -15,6 +15,24 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Open
 
+- **W-28 — Filament admin panel + auth.** Install Filament (v5, matching the app
+  repo) with a panel at `/admin`, gated to a single admin (you) via an `is_admin`
+  flag; install Filament Shield for future roles (groundwork only, one user for
+  now). The backend for managing all front-end data (W-29+).
+- **W-29 — Shared items model (todos / issues / roadmap).** One `items` table
+  serving all three: `title`, `description`, `platform` (server-desktop, ios,
+  android, tv, roku, web, scnet, integrations), `status` (planned / in-progress /
+  available), `type` (feature / bug / todo), `published` (bool → shows on the
+  public roadmap), `priority`, `sort_order`. A Filament resource to CRUD/filter,
+  and a "publish to roadmap" action. Promoting a todo/issue to the roadmap is
+  just flipping `published` — same record, compatible format by construction.
+- **W-30 — Roadmap reads from the DB.** Replace the hardcoded `$groups` array in
+  `roadmap.blade.php` with published items grouped by platform; seed the current
+  roadmap content so nothing is lost.
+- **W-31 — Manage the rest of the front-end data.** SCNet waitlist (view/export),
+  platform availability (the home "Runs where you do" grid, Available/Coming-soon
+  per platform), and the marquee/credits — all editable in the panel. Generally:
+  move front-end data that can change out of hardcoded Blade into the DB.
 - **W-08 — Donation platform.** Decide (recommendation: GitHub Sponsors +
   Ko-fi), activate it, and fix the landing page's Sponsor button —
   `github.com/sponsors/tripsittr` 404s until Sponsors is enabled. Add
