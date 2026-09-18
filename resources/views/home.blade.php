@@ -152,7 +152,7 @@
                         <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
                     </div>
                 </div>
-                <div class="rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
+                <div class="min-w-0 rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
                     <p class="mb-3 font-sans text-xs font-semibold tracking-wide text-ink-500 uppercase">Up and running in six lines</p>
                     <pre class="overflow-x-auto"><code>git clone https://github.com/tripsittr/SoundChex.git
 cd SoundChex
