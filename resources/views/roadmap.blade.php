@@ -27,7 +27,48 @@
         </div>
 
         @php
-            // status: available | progress | planned
+            // Group metadata (heading, icon, blurb) keyed by the platform value
+            // stored on items. Items themselves come from the database (published
+            // roadmap entries); this only styles the branches.
+            $platformMeta = [
+                'server-desktop' => ['Server & desktop', 'server', 'The Laravel server and the Tauri desktop app — the heart of a self-hosted library.'],
+                'ios' => ['iPhone, iPad & Apple TV', 'apple', 'A native Swift app sharing one core across Apple devices.'],
+                'android' => ['Android, Android TV & Fire TV', 'android', 'One Kotlin app for every Android form factor.'],
+                'tv' => ['Smart TVs & streaming boxes', 'tv', 'The living room beyond Android — web-based TVs and Roku.'],
+                'roku' => ['Roku', 'tv', 'A native Roku channel (BrightScript / SceneGraph).'],
+                'scnet' => ['SCNet — the optional network', 'globe', 'Reach your own server from anywhere. Self-hosting is always free; SCNet is a paid convenience.'],
+                'integrations' => ['Integrations', 'plug', 'Bringing SoundChex to the tools and assistants you already use.'],
+                'web' => ['Web', 'globe', 'The browser media centre and this site.'],
+                'meta' => ['Project', 'plug', 'Cross-cutting project work.'],
+            ];
+
+            // DB status → the tree's three visual states.
+            $statusClass = ['available' => 'available', 'in-progress' => 'progress', 'planned' => 'planned'];
+
+            // Build the groups from published items, in platform order, each
+            // item ordered by sort_order then title.
+            $published = \App\Models\Item::publishedForRoadmap()->groupBy('platform');
+            $groups = [];
+            foreach ($platformMeta as $key => [$heading, $icon, $blurb]) {
+                $rows = $published->get($key);
+                if (! $rows || $rows->isEmpty()) {
+                    continue;
+                }
+                $groups[] = [
+                    'heading' => $heading,
+                    'icon' => $icon,
+                    'blurb' => $blurb,
+                    'items' => $rows->map(fn ($it) => [
+                        $it->title,
+                        $statusClass[$it->status] ?? 'planned',
+                        $it->roadmapSummary(),
+                    ])->all(),
+                ];
+            }
+
+            // Fallback: if nothing is published yet, keep the original curated
+            // content so the page is never empty during rollout.
+            if (empty($groups)) {
             $groups = [
                 [
                     'heading' => 'Server & desktop',
@@ -92,6 +133,8 @@
                     ],
                 ],
             ];
+            } // end fallback
+
             $dot = ['available' => 'bg-emerald-400', 'progress' => 'bg-accent', 'planned' => 'bg-amber-400'];
             $ring = ['available' => 'ring-emerald-400/40', 'progress' => 'ring-accent/40', 'planned' => 'ring-amber-400/30'];
             $label = ['available' => 'Available', 'progress' => 'In progress', 'planned' => 'Planned'];
