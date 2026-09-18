@@ -62,6 +62,9 @@
                         $it->title,
                         $statusClass[$it->status] ?? 'planned',
                         $it->roadmapSummary(),
+                        // The panel's updated_at — when the entry last changed —
+                        // so the roadmap shows how fresh each item is.
+                        optional($it->updated_at)->format('M j, Y'),
                     ])->all(),
                 ];
             }
@@ -188,7 +191,10 @@
 
                                     {{-- leaves --}}
                                     <ul class="mt-4 space-y-0">
-                                        @foreach ($group['items'] as $j => [$name, $status, $desc])
+                                        {{-- Curated-fallback tuples have no date (3 elements); pad so the
+                                             4-way destructure never warns on the empty-DB path. --}}
+                                        @foreach ($group['items'] as $j => $item)
+                                            @php([$name, $status, $desc, $date] = $item + [3 => null])
                                             <li class="relative flex gap-3 py-2.5 pl-5
                                                        {{ $j < count($group['items']) - 1 ? 'border-b border-base-700/60' : '' }}">
                                                 {{-- leaf connector: a small elbow --}}
@@ -204,6 +210,9 @@
                                                     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                                                         <span class="font-semibold text-ink-100">{{ $name }}</span>
                                                         <span class="rounded-full border border-base-600 px-2 py-0.5 text-[11px] uppercase tracking-wide text-ink-500">{{ $label[$status] }}</span>
+                                                        @if (! empty($date))
+                                                            <span class="text-[11px] text-ink-500" title="Last updated">{{ $date }}</span>
+                                                        @endif
                                                     </div>
                                                     <p class="mt-0.5 text-sm text-ink-300">{{ $desc }}</p>
                                                 </div>
