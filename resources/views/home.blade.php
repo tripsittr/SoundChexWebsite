@@ -104,7 +104,7 @@
     <section id="pricing" class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <h2 class="text-center text-3xl font-bold tracking-tight text-ink-100 sm:text-4xl">Free. Actually free.</h2>
         <p class="mx-auto mt-4 max-w-2xl text-center text-ink-300">
-            Every feature, every platform, MIT-licensed. Pay only if you want us to handle the networking.
+            Every feature, every platform, AGPLv3-licensed. Pay only if you want us to handle the networking.
         </p>
         <div class="mx-auto mt-12 grid max-w-4xl gap-6 lg:grid-cols-2">
             <div class="rounded-2xl border border-base-600 bg-base-700 p-8">
@@ -113,7 +113,7 @@
                 <ul class="mt-6 space-y-3 text-sm text-ink-300">
                     <li class="flex gap-2"><span class="text-accent">✓</span> The whole app — no feature gates, ever</li>
                     <li class="flex gap-2"><span class="text-accent">✓</span> Remote access your way: Tailscale, reverse proxy, VPN, anything</li>
-                    <li class="flex gap-2"><span class="text-accent">✓</span> MIT-licensed source on GitHub</li>
+                    <li class="flex gap-2"><span class="text-accent">✓</span> AGPLv3-licensed source on GitHub</li>
                 </ul>
                 <a href="#download" class="mt-8 inline-block rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-600">Get started</a>
             </div>
@@ -144,7 +144,7 @@
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">Open source, in the open</h2>
                     <p class="mt-4 text-ink-300">
-                        MIT licensed. The code is public, the roadmap is public, the issues are public.
+                        AGPLv3 licensed. The code is public, the roadmap is public, the issues are public.
                         If SoundChex is useful to you, a donation keeps it free for everyone.
                     </p>
                     <div class="mt-6 flex flex-wrap gap-4">

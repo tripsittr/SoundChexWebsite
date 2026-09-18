@@ -59,6 +59,7 @@ change that pairs with app-side work names its partner issue. Sections run
 
 ## Done
 
+- **W-25 — Stale MIT references fixed (copy + legal).** The site said MIT in ~17 places after the AGPLv3 move; updated the footer, home + docs copy, and rewrote the licence sections of the legal suite (app-terms component, server-terms, website-terms, per-platform terms) to AGPLv3 with its §13 network-source obligation. Regenerated all 17 legal PDFs. Legal suite stays draft-pending-review. *(changelog/013)*
 - **W-24 — Roadmap as a branching tree.** Redesigned /roadmap from a flat block list into a visual tree — a SoundChex root, a central trunk, platform branches alternating left/right, feature leaves with connectors. Pure-CSS connectors, collapses to one column on mobile. *(changelog/012)*
 - **W-23 — Cast-receiver on the roadmap.** Added "Cast to SoundChex (receiver)" (Google Cast receiver + DLNA renderer; AirPlay receiver is Apple-hardware-only) and labelled the sender items "(send)". *(changelog/011)*
 - **W-22 — Full platform coverage on the home page + cast/car on the roadmap.**

@@ -46,7 +46,7 @@
 
     <h2>What it costs</h2>
     <p>
-        Nothing. SoundChex is MIT-licensed and the source is public at
+        Nothing. SoundChex is AGPLv3-licensed and the source is public at
         <a href="https://github.com/tripsittr/SoundChex">github.com/tripsittr/SoundChex</a>. There are
         no feature gates. The optional <a href="{{ route('home') }}#pricing">SCNet subscription</a>
         (the SoundChex Network, coming soon) buys remote access through a hosted relay for people who
