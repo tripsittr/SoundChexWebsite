@@ -55,10 +55,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## License
 
-This project (the SoundChex website) is licensed under the **GNU Affero General
-Public License v3.0 or later (AGPL-3.0-or-later)** — see [LICENSE](LICENSE). All
-SoundChex platforms share this licence. Because the site is served to users over
-a network, any modified, hosted build must offer those users its corresponding
-source (AGPL §13).
+This project (the SoundChex website) is **dual-licensed** like the rest of
+SoundChex — **AGPL-3.0-or-later** by default (see [LICENSE](LICENSE)), or a
+**commercial licence** for those who can't/won't comply with the AGPL. Full
+terms, the contributor agreement, and the commercial option are in the main
+repo: [LICENSING.md](https://github.com/tripsittr/SoundChex/blob/main/LICENSING.md)
+(contact `licensing@soundchex.app`). Because the site is served over a network,
+any modified, hosted build must offer those users its corresponding source
+(AGPL §13).
 
 The Laravel framework it is built on remains separately [MIT-licensed](https://opensource.org/licenses/MIT).
