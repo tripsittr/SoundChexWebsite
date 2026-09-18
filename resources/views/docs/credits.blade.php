@@ -5,22 +5,28 @@
     $total = collect($data['ecosystems'])->sum(fn ($e) => count($e['packages']));
 
     // Curated marquee — the ecosystems and frameworks SoundChex leans on most.
-    // Brand colour + a short label; a monogram tile, self-hosted (no external
-    // requests). Not every package has a logo, so the long tail below is
-    // credited by name + licence + link.
+    // Each has its actual logo (self-hosted SVG from Simple Icons, CC0), tinted
+    // to its brand colour on a light tile; getID3 has no logo, so it keeps a
+    // monogram. The long tail of packages below is credited by name + licence.
+    // [name, brand colour, logo slug (null = monogram), monogram, role, url]
     $marquee = [
-        ['Laravel', '#FF2D20', 'La', 'PHP framework', 'https://laravel.com'],
-        ['PHP', '#777BB4', 'php', 'The language', 'https://php.net'],
-        ['Filament', '#FDAE4B', 'Fi', 'Admin panels', 'https://filamentphp.com'],
-        ['Livewire', '#FB70A9', 'Lw', 'Reactive UI', 'https://livewire.laravel.com'],
-        ['Tailwind CSS', '#38BDF8', 'Tw', 'Styling', 'https://tailwindcss.com'],
-        ['Vite', '#646CFF', 'Vt', 'Build tool', 'https://vitejs.dev'],
-        ['Alpine.js', '#77C1D2', 'Aj', 'Interactivity', 'https://alpinejs.dev'],
-        ['Tauri', '#FFC131', 'Ta', 'Desktop shell', 'https://tauri.app'],
-        ['Rust', '#DEA584', 'Rs', 'Systems language', 'https://rust-lang.org'],
-        ['getID3', '#4B9CD3', 'id3', 'Media tags', 'https://github.com/JamesHeinrich/getID3'],
-        ['Symfony', '#000000', 'Sy', 'PHP components', 'https://symfony.com'],
-        ['SQLite', '#003B57', 'Sq', 'Database', 'https://sqlite.org'],
+        ['Laravel', '#FF2D20', 'laravel', 'La', 'PHP framework', 'https://laravel.com'],
+        ['PHP', '#777BB4', 'php', 'php', 'The language', 'https://php.net'],
+        ['Filament', '#FDAE4B', 'filament', 'Fi', 'Admin panels', 'https://filamentphp.com'],
+        ['Livewire', '#FB70A9', 'livewire', 'Lw', 'Reactive UI', 'https://livewire.laravel.com'],
+        ['Tailwind CSS', '#38BDF8', 'tailwindcss', 'Tw', 'Styling', 'https://tailwindcss.com'],
+        ['Vite', '#646CFF', 'vite', 'Vt', 'Build tool', 'https://vitejs.dev'],
+        ['Alpine.js', '#77C1D2', 'alpinedotjs', 'Aj', 'Interactivity', 'https://alpinejs.dev'],
+        ['Tauri', '#FFC131', 'tauri', 'Ta', 'Desktop shell', 'https://tauri.app'],
+        ['Rust', '#DEA584', 'rust', 'Rs', 'Systems language', 'https://rust-lang.org'],
+        ['getID3', '#4B9CD3', null, 'id3', 'Media tags', 'https://github.com/JamesHeinrich/getID3'],
+        ['Symfony', '#000000', 'symfony', 'Sy', 'PHP components', 'https://symfony.com'],
+        ['SQLite', '#003B57', 'sqlite', 'Sq', 'Database', 'https://sqlite.org'],
+        ['Swift', '#F05138', 'swift', 'Sw', 'iOS, iPadOS & tvOS', 'https://swift.org'],
+        ['Kotlin', '#7F52FF', 'kotlin', 'Kt', 'Android language', 'https://kotlinlang.org'],
+        ['Jetpack Compose', '#4285F4', 'jetpackcompose', 'Jc', 'Android UI', 'https://developer.android.com/jetpack/compose'],
+        ['Android', '#3DDC84', 'android', 'An', 'Android, TV & Fire TV', 'https://developer.android.com'],
+        ['Roku', '#662D91', 'roku', 'Rk', 'Roku channels', 'https://developer.roku.com'],
     ];
 @endphp
 
@@ -34,13 +40,26 @@
     </p>
 
     <h2>Built on</h2>
-    <p>A few of the projects SoundChex leans on most:</p>
+    <p>The languages, frameworks and tools SoundChex is built with — across the server, the desktop app, and the native apps for every platform we ship (and the ones we're building next):</p>
     <div class="not-prose my-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        @foreach ($marquee as [$name, $color, $mono, $role, $url])
+        @foreach ($marquee as [$name, $color, $slug, $mono, $role, $url])
             <a href="{{ $url }}" target="_blank" rel="noopener"
                class="flex items-center gap-3 rounded-xl border border-base-600 bg-base-800/60 p-3 transition hover:border-base-500 hover:bg-base-700">
-                <span class="flex size-11 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
-                      style="background: {{ $color }}">{{ $mono }}</span>
+                @if ($slug)
+                    {{-- The actual logo: a self-hosted single-colour SVG used as a
+                         mask and painted in the brand colour, on a light tile so it
+                         reads on the dark page. --}}
+                    <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white/90">
+                        <span class="size-6"
+                              style="background-color: {{ $color }};
+                                     -webkit-mask: url('{{ asset('images/credits/'.$slug.'.svg') }}') center / contain no-repeat;
+                                     mask: url('{{ asset('images/credits/'.$slug.'.svg') }}') center / contain no-repeat;"
+                              role="img" aria-label="{{ $name }} logo"></span>
+                    </span>
+                @else
+                    <span class="flex size-11 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white"
+                          style="background: {{ $color }}">{{ $mono }}</span>
+                @endif
                 <span class="min-w-0">
                     <span class="block truncate text-sm font-semibold text-ink-100">{{ $name }}</span>
                     <span class="block truncate text-xs text-ink-500">{{ $role }}</span>
@@ -65,13 +84,13 @@
                     <span class="rounded-full border border-base-600 px-2 py-0.5 text-xs font-normal text-ink-400">{{ count($eco['packages']) }}</span>
                 </span>
             </summary>
-            <div class="overflow-x-auto border-t border-base-700">
+            <div class="overflow-x-auto border-t border-base-700 px-5 py-2">
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="text-left text-xs uppercase tracking-wide text-ink-500">
-                            <th class="px-4 py-2 font-medium">Package</th>
-                            <th class="px-4 py-2 font-medium">Version</th>
-                            <th class="px-4 py-2 font-medium">Licence</th>
+                            <th class="py-2 pr-4 font-medium">Package</th>
+                            <th class="py-2 pr-4 font-medium">Version</th>
+                            <th class="py-2 pr-4 font-medium">Licence</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,12 +104,12 @@
                                         : 'https://crates.io/crates/' . $pkg['name']);
                             @endphp
                             <tr class="border-t border-base-700/50 align-top">
-                                <td class="px-4 py-2">
+                                <td class="py-2 pr-4">
                                     <a href="{{ $link }}" target="_blank" rel="noopener"
                                        class="font-medium text-ink-200 hover:text-accent">{{ $pkg['name'] }}</a>
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap text-ink-500">{{ $pkg['version'] }}</td>
-                                <td class="px-4 py-2 text-ink-400">{{ $license }}</td>
+                                <td class="py-2 pr-4 whitespace-nowrap text-ink-500">{{ $pkg['version'] }}</td>
+                                <td class="py-2 pr-4 text-ink-400">{{ $license }}</td>
                             </tr>
                         @endforeach
                     </tbody>
