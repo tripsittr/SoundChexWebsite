@@ -39,6 +39,9 @@
         'Help' => [
             'troubleshooting' => 'Troubleshooting',
         ],
+        'About' => [
+            'credits' => 'Open-source credits',
+        ],
     ];
     $current = request()->route('slug');
 @endphp
