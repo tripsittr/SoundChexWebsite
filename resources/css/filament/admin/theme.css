@@ -1,0 +1,79 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+/* Copyright (C) 2026 SoundChex */
+
+/*
+ * SoundChex admin theme — matches the landing site's palette (tokens.css).
+ * Filament v5 uses Tailwind v4; we import its theme and then override the
+ * neutral (zinc) surface scale with the SoundChex base ramp so the panel reads
+ * like the rest of the product: near-black grounds, soft ink text, the #d95145
+ * accent (set as `primary` in the panel provider).
+ */
+
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@theme {
+    --font-family-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Remap the gray/zinc surfaces to the SoundChex base scale. Filament paints
+ * panels, cards, borders and inputs from these, so this alone gives the whole
+ * UI the brand's dark, slightly-blue-black feel.
+ */
+:root,
+.dark {
+    --gray-50: #f4f4f5;   /* ink-100 */
+    --gray-100: #e4e4e7;
+    --gray-200: #b8b8c0;  /* ink-300 */
+    --gray-300: #8a8a96;  /* ink-500 */
+    --gray-400: #6b6b78;
+    --gray-500: #4a4a55;
+    --gray-600: #2a2a35;  /* base-500 */
+    --gray-700: #1f1f28;  /* base-600 */
+    --gray-800: #16161d;  /* base-700 */
+    --gray-900: #0f0f14;  /* base-800 */
+    --gray-950: #08080b;  /* base-900 */
+}
+
+/* Page background = the deepest base, like the site. */
+.fi-body,
+.fi-simple-layout {
+    background-color: #08080b;
+}
+
+/* Sidebar + topbar a touch lighter, with a hairline brand-tinted border. */
+.fi-sidebar,
+.fi-topbar > nav {
+    background-color: #0f0f14;
+    border-color: #1f1f28;
+}
+
+/* Cards / sections sit on base-800 with base-600 borders — the site's card feel. */
+.fi-section,
+.fi-fo-field-wrp,
+.fi-ta-ctn,
+.fi-modal-window {
+    --tw-bg-opacity: 1;
+}
+
+.fi-section {
+    background-color: #0f0f14;
+    border: 1px solid #1f1f28;
+}
+
+/* Active sidebar item + primary accents use the brand red. */
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background-color: color-mix(in srgb, #d95145 16%, transparent);
+    color: #f4f4f5;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: #d95145;
+}
+
+/* Rounder, softer inputs to match the site's rounded-lg language. */
+.fi-input,
+.fi-select-input,
+.fi-btn {
+    border-radius: 0.5rem;
+}
