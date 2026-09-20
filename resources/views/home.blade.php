@@ -89,9 +89,10 @@
                 ['compatible', 'Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
             ] as [$icon, $title, $body])
                 <div class="rounded-xl border border-base-600 bg-base-700 p-6">
-                    {{-- unDraw illustration, ~40% of the card, centred. Renders
-                         only once resources/illustrations/{$icon}.svg exists. --}}
-                    <x-feature-illustration :name="$icon" class="mx-auto mb-5 h-24 [&_svg]:h-full [&_svg]:w-auto" />
+                    {{-- unDraw illustration: full card width, centred, capped in
+                         height so a tall one never dominates. Renders only once
+                         resources/illustrations/{$icon}.svg exists. --}}
+                    <x-feature-illustration :name="$icon" class="mb-6 flex w-full justify-center [&_svg]:h-auto [&_svg]:max-h-36 [&_svg]:w-full" />
                     <h3 class="font-semibold text-ink-100">{{ $title }}</h3>
                     <p class="mt-2 text-sm leading-relaxed text-ink-300">{{ $body }}</p>
                 </div>
