@@ -182,7 +182,13 @@
                                 <div class="rounded-2xl border border-base-700 bg-base-800/60 p-5">
                                     <div class="flex items-center gap-3">
                                         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl border border-base-600 bg-base-700 text-ink-200">
-                                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $icons[$group['icon']] }}"/></svg>
+                                            @if (in_array($group['icon'], ['apple', 'android'], true))
+                                                {{-- The real Apple / Android brand glyph, not a stroke
+                                                     approximation. --}}
+                                                <x-platform-icon :name="$group['icon'] === 'apple' ? 'iOS' : 'Android'" class="size-5" />
+                                            @else
+                                                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $icons[$group['icon']] }}"/></svg>
+                                            @endif
                                         </span>
                                         <div>
                                             <h2 class="text-lg font-bold text-ink-100">{{ $group['heading'] }}</h2>
