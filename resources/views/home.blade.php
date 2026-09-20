@@ -185,7 +185,7 @@ npm run build &amp;&amp; php artisan serve</code></pre>
                         <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
                     </div>
                 </div>
-                <x-feature-illustration name="open-source" class="flex h-44 justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                <x-feature-illustration name="open-source" class="flex h-64 justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
             </div>
         </div>
     </section>
