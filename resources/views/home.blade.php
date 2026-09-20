@@ -163,29 +163,29 @@
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
             <div class="grid items-center gap-10 lg:grid-cols-2">
                 <div>
-                    <x-feature-illustration name="open-source" class="mb-6 flex h-32 justify-center lg:justify-start [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
                     <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">Open source, in the open</h2>
                     <p class="mt-4 text-ink-300">
                         AGPLv3 licensed. The code is public, the roadmap is public, the issues are public.
                         If SoundChex is useful to you, a donation keeps it free for everyone.
                     </p>
-                    <div class="mt-6 flex flex-wrap gap-4">
-                        <a href="https://github.com/sponsors/tripsittr" class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hot">Sponsor on GitHub</a>
-                        <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
-                    </div>
-                </div>
-                <div class="min-w-0 rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
-                    <p class="mb-3 font-sans text-xs font-semibold tracking-wide text-ink-500 uppercase">Up and running in six lines</p>
-                    <pre class="overflow-x-auto"><code>git clone https://github.com/tripsittr/SoundChex.git
+                    <div class="mt-6 min-w-0 rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
+                        <p class="mb-3 font-sans text-xs font-semibold tracking-wide text-ink-500 uppercase">Up and running in six lines</p>
+                        <pre class="overflow-x-auto"><code>git clone https://github.com/tripsittr/SoundChex.git
 cd SoundChex
 composer install &amp;&amp; npm install
 cp .env.example .env &amp;&amp; php artisan key:generate
 php artisan migrate &amp;&amp; php artisan storage:link
 npm run build &amp;&amp; php artisan serve</code></pre>
-                    <p class="mt-3 font-sans text-sm">
-                        <a href="{{ route('docs.show', 'quick-start') }}" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
-                    </p>
+                        <p class="mt-3 font-sans text-sm">
+                            <a href="{{ route('docs.show', 'quick-start') }}" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-4">
+                        <a href="https://github.com/sponsors/tripsittr" class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hot">Sponsor on GitHub</a>
+                        <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
+                    </div>
                 </div>
+                <x-feature-illustration name="open-source" class="flex h-44 justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
             </div>
         </div>
     </section>
