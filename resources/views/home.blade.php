@@ -163,7 +163,7 @@
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
             <div class="grid items-center gap-10 lg:grid-cols-2">
                 <div>
-                    <x-feature-illustration name="open-source" class="mb-6 flex h-28 justify-start [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                    <x-feature-illustration name="open-source" class="mb-6 flex h-48 justify-start [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
                     <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">Open source, in the open</h2>
                     <p class="mt-4 text-ink-300">
                         AGPLv3 licensed. The code is public, the roadmap is public, the issues are public.
