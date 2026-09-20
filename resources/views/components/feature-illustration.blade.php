@@ -23,9 +23,10 @@
         // #FFB8B8 / #FAAFB2 light variant), so map every one to the accent so the
         // set matches the brand exactly rather than an off-red. The greys and
         // darks (#2F2E41, #3F3D56, #E6E6E6…) are left as the illustration's shading.
+        $recolour = ['#6C63FF', '#F95454', '#FFB8B8', '#FAAFB2', '#ED9DA0'];
         $svg = str_ireplace(
-            ['#6C63FF', '#F95454', '#FFB8B8', '#FAAFB2'],
-            ['var(--sc-accent)', 'var(--sc-accent)', 'var(--sc-accent)', 'var(--sc-accent)'],
+            $recolour,
+            array_fill(0, count($recolour), 'var(--sc-accent)'),
             $raw,
         );
 

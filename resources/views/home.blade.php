@@ -88,11 +88,14 @@
                 ['offline', 'Works offline', 'The whole catalogue mirrors to your device, so browsing, search and playback of downloads work with no network at all. Downloads survive the app closing.'],
                 ['compatible', 'Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
             ] as [$icon, $title, $body])
-                <div class="rounded-xl border border-base-600 bg-base-700 p-6">
-                    {{-- unDraw illustration: full card width, centred, capped in
-                         height so a tall one never dominates. Renders only once
-                         resources/illustrations/{$icon}.svg exists. --}}
-                    <x-feature-illustration :name="$icon" class="mb-6 flex w-full justify-center [&_svg]:h-auto [&_svg]:max-h-36 [&_svg]:w-full" />
+                <div class="flex h-full flex-col rounded-xl border border-base-600 bg-base-700 p-6">
+                    {{-- Fixed-height illustration well, so every card's art sits in
+                         the same vertical space whatever its aspect ratio — which
+                         also lines the titles up across the row. The text starts at
+                         that same height; any extra space falls below it. --}}
+                    <div class="mb-6 flex h-32 items-center justify-center">
+                        <x-feature-illustration :name="$icon" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                    </div>
                     <h3 class="font-semibold text-ink-100">{{ $title }}</h3>
                     <p class="mt-2 text-sm leading-relaxed text-ink-300">{{ $body }}</p>
                 </div>
@@ -117,8 +120,11 @@
         <p class="mx-auto mt-4 max-w-2xl text-center text-ink-300">
             Every feature, every platform, AGPLv3-licensed. Pay only if you want us to handle the networking.
         </p>
-        <div class="mx-auto mt-12 grid max-w-4xl gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-base-600 bg-base-700 p-8">
+        <div class="mx-auto mt-12 grid max-w-4xl items-stretch gap-6 lg:grid-cols-2">
+            <div class="flex h-full flex-col rounded-2xl border border-base-600 bg-base-700 p-8">
+                <div class="mb-6 flex h-28 items-center justify-center">
+                    <x-feature-illustration name="self-hosted" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                </div>
                 <h3 class="text-xl font-bold text-ink-100">Self-hosted</h3>
                 <p class="mt-1 text-3xl font-extrabold text-ink-100">Free <span class="text-base font-medium text-ink-500">forever</span></p>
                 <ul class="mt-6 space-y-3 text-sm text-ink-300">
@@ -126,10 +132,13 @@
                     <li class="flex gap-2"><span class="text-accent">✓</span> Remote access your way: Tailscale, reverse proxy, VPN, anything</li>
                     <li class="flex gap-2"><span class="text-accent">✓</span> AGPLv3-licensed source on GitHub</li>
                 </ul>
-                <a href="#download" class="mt-8 inline-block rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-600">Get started</a>
+                <a href="#download" class="mt-8 inline-block self-start rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-600">Get started</a>
             </div>
-            <div class="relative rounded-2xl border border-accent/40 bg-base-700 p-8">
+            <div class="relative flex h-full flex-col rounded-2xl border border-accent/40 bg-base-700 p-8">
                 <span class="absolute -top-3 right-6 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">Coming soon</span>
+                <div class="mb-6 flex h-28 items-center justify-center">
+                    <x-feature-illustration name="scnet" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                </div>
                 <h3 class="text-xl font-bold text-ink-100">SCNet <span class="ml-1 text-sm font-medium text-ink-500">— the SoundChex Network</span></h3>
                 <p class="mt-1 text-3xl font-extrabold text-ink-100">Subscription</p>
                 <ul class="mt-6 space-y-3 text-sm text-ink-300">
