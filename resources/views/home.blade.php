@@ -106,6 +106,7 @@
     {{-- Profiles --}}
     <section class="border-y border-base-600/60 bg-base-800">
         <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
+            <x-feature-illustration name="profiles" class="mx-auto mb-8 flex h-40 justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
             <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">A profile for every person in the house</h2>
             <p class="mx-auto mt-4 max-w-2xl text-ink-300">
                 Per-person history, resume points and watchlists — and a kids mode that caps ratings
@@ -162,6 +163,7 @@
         <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
             <div class="grid items-center gap-10 lg:grid-cols-2">
                 <div>
+                    <x-feature-illustration name="open-source" class="mb-6 flex h-28 justify-start [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
                     <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">Open source, in the open</h2>
                     <p class="mt-4 text-ink-300">
                         AGPLv3 licensed. The code is public, the roadmap is public, the issues are public.
