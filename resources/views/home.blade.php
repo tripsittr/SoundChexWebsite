@@ -47,12 +47,19 @@
             @endphp
             <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 @foreach ($platforms as $platform)
-                    <div class="flex flex-col items-center gap-1 rounded-xl border border-base-600 bg-base-700 px-4 py-5">
-                        <span class="text-center font-semibold text-ink-100">{{ $platform->name }}</span>
+                    <div class="flex flex-col items-center gap-2 rounded-xl border border-base-600 bg-base-700 px-4 py-4">
+                        <x-platform-icon
+                            :name="$platform->name"
+                            @class([
+                                'h-6 w-6',
+                                'text-ink-100' => $platform->available,
+                                'text-ink-500/70' => ! $platform->available,
+                            ]) />
+                        <span class="text-center text-sm font-semibold text-ink-100">{{ $platform->name }}</span>
                         @if ($platform->available)
-                            <a href="{{ route('download') }}" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
+                            <a href="{{ route('download') }}" class="text-xs font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
                         @else
-                            <span class="text-sm text-ink-500">Coming soon</span>
+                            <span class="text-xs text-ink-500">Coming soon</span>
                         @endif
                     </div>
                 @endforeach
@@ -74,14 +81,17 @@
         </p>
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ([
-                ['One catalogue, four media types', 'Music, films, TV and books in a single library with one search box and one player — resume anything, anywhere.'],
-                ['Metadata that fills itself in', 'Nine sources asked in turn — TMDB, MusicBrainz, AcoustID, Open Library, iTunes, Spotify, OpenSubtitles and your files\' own tags. Every run is snapshotted and reversible.'],
-                ['Search that reaches inside things', 'One query across titles, cast, film dialogue and the text of books. A dialogue hit jumps to the moment it is spoken; a book hit opens at the page.'],
-                ['Reading and watching, not just listening', 'EPUB, PDF and CBZ with highlights, private notes and OCR. Video with hardware transcoding, caption tracks and skip markers.'],
-                ['Works offline', 'The whole catalogue mirrors to your device, so browsing, search and playback of downloads work with no network at all. Downloads survive the app closing.'],
-                ['Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
-            ] as [$title, $body])
+                ['catalogue', 'One catalogue, four media types', 'Music, films, TV and books in a single library with one search box and one player — resume anything, anywhere.'],
+                ['metadata', 'Metadata that fills itself in', 'Nine sources asked in turn — TMDB, MusicBrainz, AcoustID, Open Library, iTunes, Spotify, OpenSubtitles and your files\' own tags. Every run is snapshotted and reversible.'],
+                ['search', 'Search that reaches inside things', 'One query across titles, cast, film dialogue and the text of books. A dialogue hit jumps to the moment it is spoken; a book hit opens at the page.'],
+                ['read', 'Reading and watching, not just listening', 'EPUB, PDF and CBZ with highlights, private notes and OCR. Video with hardware transcoding, caption tracks and skip markers.'],
+                ['offline', 'Works offline', 'The whole catalogue mirrors to your device, so browsing, search and playback of downloads work with no network at all. Downloads survive the app closing.'],
+                ['compatible', 'Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
+            ] as [$icon, $title, $body])
                 <div class="rounded-xl border border-base-600 bg-base-700 p-6">
+                    {{-- unDraw illustration, ~40% of the card, centred. Renders
+                         only once resources/illustrations/{$icon}.svg exists. --}}
+                    <x-feature-illustration :name="$icon" class="mx-auto mb-5 h-24 [&_svg]:h-full [&_svg]:w-auto" />
                     <h3 class="font-semibold text-ink-100">{{ $title }}</h3>
                     <p class="mt-2 text-sm leading-relaxed text-ink-300">{{ $body }}</p>
                 </div>
