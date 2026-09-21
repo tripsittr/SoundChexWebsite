@@ -39,7 +39,9 @@ project skills in `.claude/skills/`) — follow them.
   `php artisan track:issue`. Website work is `platform=web`,
   `repo=SoundChexWebsite`; historical W-NN ids live on the item's `ref`. Advance
   the item's `status` as work moves (Planned → In progress → Shipped/Done, or
-  Deferred); nothing is deleted.
+  Deferred) — drag the card on the Board, or from the console
+  `php artisan track:move <id…> --to=<status>` (`--note` appends a dated line).
+  Nothing is deleted.
 - **Every change gets a changelog** in `changelog/NNN-name.md`, written when
   the change lands. Say what is still broken as well as what was done.
 - **Everything reaches `main` through a pull request** (the repo has a GitHub
