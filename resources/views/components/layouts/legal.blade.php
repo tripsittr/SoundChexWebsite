@@ -1,4 +1,4 @@
-@props(['title', 'updated' => 'September 17, 2026'])
+@props(['title', 'updated' => 'September 23, 2026'])
 <x-layouts.site :title="$title . ' — SoundChex Legal'" description="SoundChex legal documents — terms, privacy and cookie policies for the website, the server and each app.">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:grid lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-12">
         <aside>
