@@ -68,6 +68,32 @@ class TrackIssueCommandTest extends TestCase
         $this->assertSame(0, Item::count());
     }
 
+    public function test_an_invalid_repo_fails_without_writing(): void
+    {
+        // `repo` was the one enum flag nobody validated, so a typo stored a
+        // value no lookup would ever match and the item quietly belonged to no
+        // repo at all.
+        $this->artisan('track:issue', [
+            'title' => 'x',
+            '--platform' => 'web',
+            '--repo' => 'SoundChx',
+        ])->assertFailed();
+
+        $this->assertSame(0, Item::count());
+    }
+
+    public function test_an_item_with_no_repo_is_still_allowed(): void
+    {
+        // The column is nullable and a cross-cutting item genuinely has no
+        // single repo — validation must not turn "none" into an error.
+        $this->artisan('track:issue', [
+            'title' => 'x',
+            '--platform' => 'web',
+        ])->assertSuccessful();
+
+        $this->assertNull(Item::sole()->repo);
+    }
+
     /**
      * Regression: the bad value used to be reported twice — once by the resolver
      * and again by a second validation pass that saw the resolver's null and
