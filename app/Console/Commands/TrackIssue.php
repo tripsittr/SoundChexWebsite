@@ -44,14 +44,16 @@ class TrackIssue extends Command
         $title = $this->argument('title')
             ?: text('Title', required: true);
 
+        // `resolve` reports the bad value itself and returns null, which is also
+        // what an unanswered optional prompt gives — so each one is checked here.
         $platform = $this->resolve('platform', Item::PLATFORMS, $interactive, 'Platform');
-        if ($platform === null) {
-            return self::FAILURE;
-        }
-
         $type = $this->resolve('type', Item::TYPES, $interactive, 'Type', 'todo');
         $status = $this->resolve('status', Item::STATUSES, $interactive, 'Status', 'planned');
         $priority = $this->resolve('priority', Item::PRIORITIES, $interactive, 'Priority', 'normal');
+
+        if ($platform === null || $type === null || $status === null || $priority === null) {
+            return self::FAILURE;
+        }
 
         $repo = $this->option('repo');
         if ($interactive && ! $repo) {
@@ -73,16 +75,6 @@ class TrackIssue extends Command
 
         $summary = $this->option('summary')
             ?: ($publish && $interactive ? text('Public roadmap blurb (optional)') : null);
-
-        // Validate the enum options passed via flags.
-        foreach ([['type', Item::TYPES], ['status', Item::STATUSES], ['priority', Item::PRIORITIES]] as [$field, $set]) {
-            $val = $$field;
-            if (! array_key_exists($val, $set)) {
-                $this->error("Invalid {$field}: {$val}. One of: ".implode(', ', array_keys($set)));
-
-                return self::FAILURE;
-            }
-        }
 
         $item = Item::create([
             'title' => $title,
@@ -116,13 +108,13 @@ class TrackIssue extends Command
     {
         $value = $this->option($option);
 
-        if ($value && ! array_key_exists($value, $set)) {
-            $this->error("Invalid {$option}: {$value}. One of: ".implode(', ', array_keys($set)));
-
-            return null;
-        }
-
         if ($value) {
+            if (! array_key_exists($value, $set)) {
+                $this->error("Invalid {$option}: {$value}. One of: ".implode(', ', array_keys($set)));
+
+                return null;
+            }
+
             return $value;
         }
 

@@ -47,28 +47,34 @@ class Board extends Page
 
     public function mount(): void
     {
-        $saved = session('board.column_order', []);
-        // Keep only known statuses, then append any missing (e.g. new statuses).
-        $order = array_values(array_filter($saved, fn ($s) => array_key_exists($s, self::COLUMNS)));
-        foreach (array_keys(self::COLUMNS) as $s) {
-            if (! in_array($s, $order, true)) {
-                $order[] = $s;
-            }
-        }
-        $this->columnOrder = $order;
+        $this->columnOrder = $this->normaliseOrder(session('board.column_order', []));
     }
 
     /** Persist a new column order from the drag handler. */
     public function saveColumnOrder(array $order): void
     {
-        $order = array_values(array_filter($order, fn ($s) => array_key_exists($s, self::COLUMNS)));
-        foreach (array_keys(self::COLUMNS) as $s) {
-            if (! in_array($s, $order, true)) {
-                $order[] = $s;
-            }
-        }
-        $this->columnOrder = $order;
-        session(['board.column_order' => $order]);
+        $this->columnOrder = $this->normaliseOrder($order);
+        session(['board.column_order' => $this->columnOrder]);
+    }
+
+    /**
+     * Keep only known statuses, then append any missing (e.g. a newly added
+     * status), so a stale saved order never hides a column. Duplicates are
+     * dropped — a repeated key would render the same column twice.
+     *
+     * @param  array<int, mixed>  $order
+     * @return array<int, string>
+     */
+    private function normaliseOrder(array $order): array
+    {
+        $known = array_values(array_unique(array_filter(
+            $order,
+            fn ($status) => array_key_exists($status, self::COLUMNS),
+        )));
+
+        $missing = array_diff(array_keys(self::COLUMNS), $known);
+
+        return array_values([...$known, ...$missing]);
     }
 
     /** The slide-over "view item" action, opened when a card is clicked. */
@@ -89,32 +95,40 @@ class Board extends Page
     /**
      * Items grouped by status column, honouring the platform filter.
      *
-     * @return array<string, array{label: string, items: Collection, extra: int}>
+     * @return array<string, array{label: string, items: Collection, extra: int, total: int}>
      */
     public function getColumns(): array
     {
         $base = Item::query()
-            ->when($this->platform, fn ($q) => $q->where('platform', $this->platform))
+            ->when($this->platform, fn ($query) => $query->where('platform', $this->platform))
             ->orderBy('sort_order')
             ->orderByDesc('updated_at');
 
-        $order = ! empty($this->columnOrder) ? $this->columnOrder : array_keys(self::COLUMNS);
+        $order = $this->columnOrder !== [] ? $this->columnOrder : array_keys(self::COLUMNS);
 
-        $out = [];
+        $columns = [];
         foreach ($order as $status) {
-            $label = self::COLUMNS[$status] ?? $status;
-            $q = (clone $base)->where('status', $status);
-            $total = (clone $q)->count();
-            $items = $status === 'done' ? $q->limit(self::DONE_LIMIT)->get() : $q->get();
-            $out[$status] = [
-                'label' => $label,
+            $query = (clone $base)->where('status', $status);
+
+            // Only "done" is capped, so only it needs the extra count query to
+            // work out the "+N more" note; elsewhere the fetched rows are all.
+            if ($status === 'done') {
+                $total = (clone $query)->count();
+                $items = $query->limit(self::DONE_LIMIT)->get();
+            } else {
+                $items = $query->get();
+                $total = $items->count();
+            }
+
+            $columns[$status] = [
+                'label' => self::COLUMNS[$status] ?? $status,
                 'items' => $items,
                 'extra' => max(0, $total - $items->count()),
                 'total' => $total,
             ];
         }
 
-        return $out;
+        return $columns;
     }
 
     /** Platform options for the filter chips. */

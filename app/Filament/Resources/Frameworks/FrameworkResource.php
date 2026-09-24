@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class FrameworkResource extends Resource
 {
@@ -27,7 +28,7 @@ class FrameworkResource extends Resource
 
     protected static ?string $modelLabel = 'framework';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 30;
 
@@ -39,13 +40,6 @@ class FrameworkResource extends Resource
     public static function table(Table $table): Table
     {
         return FrameworksTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
