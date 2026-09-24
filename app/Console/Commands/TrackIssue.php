@@ -64,6 +64,17 @@ class TrackIssue extends Command
             ) ?: null;
         }
 
+        // Validated like every other enum flag. `repo` stayed unchecked for a
+        // while and a typo simply stored a bad value — nothing reads it back
+        // against the list, so the item just quietly belonged to no repo.
+        // Empty stays allowed: the column is nullable and a cross-cutting item
+        // genuinely has no single repo.
+        if ($repo !== null && $repo !== '' && ! array_key_exists($repo, Item::REPOS)) {
+            $this->error("Invalid repo: {$repo}. One of: ".implode(', ', array_keys(Item::REPOS)));
+
+            return self::FAILURE;
+        }
+
         $description = $this->option('description')
             ?: ($interactive ? text('Description (optional)') : null);
 
