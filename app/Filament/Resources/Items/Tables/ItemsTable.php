@@ -42,22 +42,26 @@ class ItemsTable
                 TextColumn::make('type')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => Item::TYPES[$state] ?? $state)
-                    ->colors([
-                        'primary' => 'feature',
-                        'danger' => 'bug',
-                        'gray' => 'todo',
-                        'warning' => 'chore',
-                    ]),
+                    ->color(fn (string $state): string => match ($state) {
+                        'feature' => 'primary',
+                        'bug' => 'danger',
+                        'chore' => 'warning',
+                        default => 'gray',
+                    }),
 
+                // `colors()` matches each condition with `===`, so an array of
+                // states (['available', 'done']) never matches and those badges
+                // silently fell back to primary. `color()` with a match handles
+                // the shared-colour case properly — and mirrors ItemInfolist.
                 TextColumn::make('status')
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => Item::STATUSES[$state] ?? $state)
-                    ->colors([
-                        'gray' => 'planned',
-                        'warning' => 'in-progress',
-                        'success' => ['available', 'done'],
-                        'danger' => 'deferred',
-                    ])
+                    ->color(fn (string $state): string => match ($state) {
+                        'available', 'done' => 'success',
+                        'in-progress' => 'warning',
+                        'deferred' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 IconColumn::make('published')

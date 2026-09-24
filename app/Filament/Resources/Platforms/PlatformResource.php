@@ -1,5 +1,8 @@
 <?php
 
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Copyright (C) 2026 SoundChex
+
 namespace App\Filament\Resources\Platforms;
 
 use App\Filament\Resources\Platforms\Pages\CreatePlatform;
@@ -13,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class PlatformResource extends Resource
 {
@@ -22,7 +26,7 @@ class PlatformResource extends Resource
 
     protected static ?string $navigationLabel = 'Platforms';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+    protected static string|UnitEnum|null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 20;
 
@@ -34,13 +38,6 @@ class PlatformResource extends Resource
     public static function table(Table $table): Table
     {
         return PlatformsTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
