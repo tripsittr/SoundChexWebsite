@@ -42,6 +42,13 @@ project skills in `.claude/skills/`) — follow them.
   Deferred) — drag the card on the Board, or from the console
   `php artisan track:move <id…> --to=<status>` (`--note` appends a dated line).
   Nothing is deleted.
+- **Check which tracker you are writing to.** With `TRACKER_REMOTE_URL` and
+  `TRACKER_REMOTE_TOKEN` set, `track:issue` and `track:move` write to the live
+  site; without them they write to the local SQLite file. Both print their
+  target on every call — read it. The two copies once drifted by a session's
+  worth of work because nothing said which one was being changed (W-33), and
+  the local file is a scratch copy, not the record. `php artisan tracker:push`
+  reconciles local → live, preserving ids.
 - **Every change gets a changelog** in `changelog/NNN-name.md`, written when
   the change lands. Say what is still broken as well as what was done.
 - **Everything reaches `main` through a pull request** (the repo has a GitHub
