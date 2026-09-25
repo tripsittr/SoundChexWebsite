@@ -23,6 +23,9 @@
 /public/storage
 /storage/*.key
 /storage/pail
+# Deploy-time tracker snapshots: one per deploy, ~440 KB each. The copy meant
+# for git is the one you download from the panel and commit deliberately.
+/storage/backups
 /vendor
 _ide_helper.php
 Homestead.json

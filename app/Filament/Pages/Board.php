@@ -7,11 +7,13 @@ namespace App\Filament\Pages;
 
 use App\Filament\Resources\Items\Schemas\ItemInfolist;
 use App\Models\Item;
+use App\Services\TrackerExport;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * A Trello/Jira-style board over the tracker: columns are statuses, cards are
@@ -44,6 +46,35 @@ class Board extends Page
         'deferred' => 'Deferred',
         'done' => 'Done',
     ];
+
+    /**
+     * The Export button in the page header (W-32).
+     *
+     * Downloads to the machine you are on rather than writing on the server:
+     * a copy that never leaves the droplet does not protect against losing
+     * the droplet, which is the whole point. Drop the file in the repo and
+     * commit it and the tracker gains a history you can diff.
+     *
+     * @return array<int, Action>
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('exportTracker')
+                ->label('Export')
+                ->icon(Heroicon::OutlinedArrowDownTray)
+                ->color('gray')
+                ->action(function (): StreamedResponse {
+                    $export = app(TrackerExport::class);
+
+                    return response()->streamDownload(
+                        fn () => print $export->toJson(),
+                        $export->filename(),
+                        ['Content-Type' => 'application/json'],
+                    );
+                }),
+        ];
+    }
 
     public function mount(): void
     {

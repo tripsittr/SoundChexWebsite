@@ -14,18 +14,16 @@ $FORGE_COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autol
 npm ci
 npm run build
 
-# The database is one SQLite file, and it is gitignored — so it is absent on a
-# fresh server and present, with every tracker item in it, on every deploy
-# after that. Create it only when it is genuinely missing: a blind `touch` is
-# harmless, but being explicit is what stops someone "tidying" this into
-# something that truncates.
-if [ ! -f database/database.sqlite ]; then
-    echo "No database found — creating one for this fresh server."
-    touch database/database.sqlite
-fi
+# A restore point from the moment before this deploy changed anything, which
+# is exactly when you want one (W-32). Written to storage/, which survives a
+# zero-downtime deploy — anything inside a release directory is discarded by
+# the next one. Failure here must not stop the deploy: a missing snapshot is
+# worse than no deploy only if it also blocks the fix.
+$FORGE_PHP artisan track:export || echo "Snapshot failed — continuing."
 
-# --force because this is non-interactive. Migrations are additive; the 390
-# tracker items live in the file above and are not touched by them.
+# --force because this is non-interactive. Migrations are additive; the
+# tracker items live in the SQLite file named by DB_DATABASE, which is an
+# absolute path into storage/ and so is untouched by deploys.
 $FORGE_PHP artisan migrate --force
 
 # Caches rebuilt from the freshly pulled code. Cleared first: a cached config
