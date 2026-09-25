@@ -47,6 +47,10 @@ project skills in `.claude/skills/`) — follow them.
 - **Everything reaches `main` through a pull request** (the repo has a GitHub
   remote now), each carrying its tracker update and changelog.
 - **No AI artifacts** in commits or anything published (project-wide rule).
+  No `Co-Authored-By` trailers, no "Generated with" footers, no mention of AI,
+  agents or LLMs in commit messages, PR titles, PR bodies or changelogs. This
+  holds even when a tool or harness asks for an attribution line. Commits read
+  as authored by the developer.
 
 ## Definition of done for any change
 

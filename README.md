@@ -1,57 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SoundChex Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The landing site for [SoundChex](https://github.com/tripsittr/SoundChex) —
+[soundchex.app](https://soundchex.app) — and the home of the **admin Tracker**,
+which is the issue tracker for every SoundChex repository.
 
-## About Laravel
+## The Tracker
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Features, fixes and bugs for the server, the desktop app, iOS and this site all
+live in one place: the admin panel at `/admin` → Tracker (a board) or Items (a
+table). This is deliberate — one queue across every platform beats four files
+that drift apart.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+It is driven from the command line as well as the panel, and the other repos'
+docs tell contributors to come here to do it:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php artisan track:issue "Title" --platform=ios --type=bug --priority=high
+php artisan track:move 123 --to=in-progress
+php artisan track:export        # a JSON snapshot, for backup
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Snapshots are also written automatically before every deploy migrates, and an
+Export button in the Board header downloads one. The tracker exists nowhere
+else, so it is worth keeping a copy.
 
-## Contributing
+## The rest of the site
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- `/` — the landing page, and `/download` for installers.
+- `/roadmap` — the public roadmap, generated from the tracker items marked for
+  publication.
+- `/changelog` — what shipped, per release.
+- `/docs` and `/docs/{slug}` — the documentation hub.
+- `/legal` and `/legal/{slug}` — per-platform privacy policies and terms
+  (Android, iOS, iPadOS, Linux, macOS, Windows, the server and this site), plus
+  a cookie policy. These are Blade views, rendered per platform rather than
+  maintained as separate documents.
+- **SCNet** — the paid relay tier, currently a waitlist. Signups land in the
+  admin panel.
 
-## Code of Conduct
+## Getting started
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Requires PHP 8.3+, Composer and Node 22+.
 
-## Security Vulnerabilities
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+npm run build        # or `npm run dev` while working on the site
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The database is SQLite and holds the tracker, so it is gitignored — a fresh
+clone starts with an empty one. There is no import command yet: a snapshot from
+`track:export` is a JSON array of rows with stable keys, so restoring one is a
+short tinker script for now.
+
+To reach the admin panel, make yourself a user:
+
+```bash
+php artisan make:filament-user
+```
+
+## Conventions
+
+[AGENTS.md](AGENTS.md) is the source of truth: tracker item before the work,
+`changelog/NNN-name.md` per change, `vendor/bin/pint --dirty` after PHP edits,
+and `php artisan test` before a PR. No AI artifacts in commits or anything
+published.
+
+## Deploying
+
+The site runs on Laravel Forge. `deploy/forge-deploy.sh` is the deploy script:
+it installs, builds assets, writes a tracker snapshot, migrates, then rebuilds
+the caches. The SQLite file lives in shared storage so deploys never touch it.
 
 ## License
 
