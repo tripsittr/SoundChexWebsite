@@ -6,7 +6,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Item;
+use App\Services\TrackerClient;
 use Illuminate\Console\Command;
+use RuntimeException;
 
 use function Laravel\Prompts\select;
 
@@ -53,44 +55,65 @@ class TrackMove extends Command
 
         $note = $this->option('note');
 
-        $items = Item::findMany($ids);
-        $missing = array_diff(
-            array_map('intval', $ids),
-            $items->pluck('id')->all(),
-        );
+        $client = TrackerClient::fromConfig();
+        $moved = 0;
+        // Tracked apart from $moved: an item that is *already* in the target
+        // status was found and is fine, so the command succeeded even though
+        // nothing changed. Only "no such item, anywhere" is a failure.
+        $found = 0;
 
-        foreach ($missing as $id) {
-            $this->warn("No tracked item #{$id}.");
-        }
+        foreach ($ids as $id) {
+            $item = $client->find((int) $id);
 
-        if ($items->isEmpty()) {
-            $this->error('Nothing to move.');
+            if ($item === null) {
+                $this->warn("No tracked item #{$id}.");
 
-            return self::FAILURE;
-        }
+                continue;
+            }
 
-        foreach ($items as $item) {
-            $from = $item->status;
+            $found++;
+
+            $from = $item['status'];
 
             // A no-op move is worth saying, not silently counting as a change —
             // and it must not stamp a fresh activity date for a status that did
             // not actually move.
             if ($from === $status) {
-                $this->line("#{$item->id} already {$status} — {$item->title}");
+                $this->line("#{$item['id']} already {$status} — {$item['title']}");
 
                 continue;
             }
 
-            $item->status = $status;
+            $changes = ['status' => $status];
 
             if ($note !== null && $note !== '') {
-                $item->description = trim(($item->description ?? '')."\n\n".now()->toDateString().": {$note}");
+                $changes['description'] = trim(($item['description'] ?? '')."\n\n".now()->toDateString().": {$note}");
             }
 
-            $item->save();
+            try {
+                $client->update((int) $item['id'], $changes);
+            } catch (RuntimeException $e) {
+                $this->error("#{$item['id']}: ".$e->getMessage());
 
-            $this->info("#{$item->id}  {$from} → {$status}  — {$item->title}");
+                continue;
+            }
+
+            $moved++;
+
+            $this->info("#{$item['id']}  {$from} → {$status}  — {$item['title']}");
         }
+
+        if ($found === 0) {
+            $this->error('Nothing to move.');
+            $this->line("  <fg=gray>Looked on {$client->target()}</>");
+
+            return self::FAILURE;
+        }
+
+        // Which tracker this changed, always said (W-33).
+        $this->line($moved === 0
+            ? "  <fg=gray>Nothing changed on {$client->target()}</>"
+            : "  <fg=gray>→ {$client->target()}</>");
 
         return self::SUCCESS;
     }

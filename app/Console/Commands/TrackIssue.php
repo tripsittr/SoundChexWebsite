@@ -6,7 +6,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Item;
+use App\Services\TrackerClient;
 use Illuminate\Console\Command;
+use RuntimeException;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
@@ -87,24 +89,36 @@ class TrackIssue extends Command
         $summary = $this->option('summary')
             ?: ($publish && $interactive ? text('Public roadmap blurb (optional)') : null);
 
-        $item = Item::create([
-            'title' => $title,
-            'description' => $description ?: null,
-            'platform' => $platform,
-            'repo' => $repo ?: null,
-            'type' => $type,
-            'status' => $status,
-            'priority' => $priority,
-            'ref' => $ref ?: null,
-            'public_summary' => $summary ?: null,
-            'published' => $publish,
-            'sort_order' => (int) Item::where('platform', $platform)->max('sort_order') + 1,
-        ]);
+        $client = TrackerClient::fromConfig();
 
-        $this->info("Tracked #{$item->id}: {$item->title}");
-        $this->line("  {$item->platformLabel()} · {$item->type} · {$item->status}".
-            ($item->ref ? " · {$item->ref}" : '').
-            ($item->published ? ' · on roadmap' : ' · internal'));
+        try {
+            $item = $client->create([
+                'title' => $title,
+                'description' => $description ?: null,
+                'platform' => $platform,
+                'repo' => $repo ?: null,
+                'type' => $type,
+                'status' => $status,
+                'priority' => $priority,
+                'ref' => $ref ?: null,
+                'public_summary' => $summary ?: null,
+                'published' => $publish,
+            ]);
+        } catch (RuntimeException $e) {
+            $this->error($e->getMessage());
+
+            return self::FAILURE;
+        }
+
+        $this->info("Tracked #{$item['id']}: {$item['title']}");
+        $this->line('  '.Item::PLATFORMS[$item['platform']]." · {$item['type']} · {$item['status']}".
+            ($item['ref'] ? " · {$item['ref']}" : '').
+            ($item['published'] ? ' · on roadmap' : ' · internal'));
+
+        // Always said, never inferred. The local and live trackers drifted
+        // apart precisely because nothing announced which one was being
+        // written to (W-33).
+        $this->line("  <fg=gray>→ {$client->target()}</>");
 
         return self::SUCCESS;
     }

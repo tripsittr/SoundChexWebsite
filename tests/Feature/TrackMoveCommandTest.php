@@ -96,6 +96,24 @@ class TrackMoveCommandTest extends TestCase
         $this->assertSame('2026-01-01', $item->fresh()->activity_on->toDateString());
     }
 
+    /**
+     * "Already there" and "no such item" are different answers.
+     *
+     * Routing track:move through the API client (W-33) briefly made a no-op
+     * move exit non-zero, which would have broken any script that moves a
+     * batch where some items are already done.
+     */
+    public function test_an_unknown_id_fails_but_an_already_moved_item_does_not(): void
+    {
+        $this->artisan('track:move', ['id' => [999999], '--to' => 'done'])
+            ->assertFailed();
+
+        $item = Item::create(['title' => 'x', 'status' => 'done', 'platform' => 'ios']);
+
+        $this->artisan('track:move', ['id' => [$item->id], '--to' => 'done'])
+            ->assertSuccessful();
+    }
+
     public function test_a_note_is_appended_and_dated(): void
     {
         $item = Item::create(['title' => 'x', 'status' => 'planned', 'platform' => 'ios', 'description' => 'Original.']);
