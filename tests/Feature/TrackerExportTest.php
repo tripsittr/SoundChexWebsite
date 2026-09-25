@@ -155,6 +155,27 @@ class TrackerExportTest extends TestCase
         $response->assertFileDownloaded();
     }
 
+    public function test_pruning_only_touches_its_own_snapshots(): void
+    {
+        // prune() runs unattended on every deploy. It globs a directory and
+        // deletes, so the blast radius is worth pinning: an operator's own
+        // file sitting alongside the snapshots must survive.
+        $this->item('One');
+
+        $directory = storage_path('backups');
+        File::ensureDirectoryExists($directory);
+
+        File::put($directory.'/tracker-2020-01-01_000000.json', '{}');
+        File::put($directory.'/keep-me.json', 'operator');
+        File::put($directory.'/tracker-notes.txt', 'operator');
+
+        $this->artisan('track:export', ['--keep' => 1])->assertSuccessful();
+
+        $this->assertFileExists($directory.'/keep-me.json');
+        $this->assertFileExists($directory.'/tracker-notes.txt');
+        $this->assertFileDoesNotExist($directory.'/tracker-2020-01-01_000000.json');
+    }
+
     protected function tearDown(): void
     {
         File::deleteDirectory(storage_path('backups'));

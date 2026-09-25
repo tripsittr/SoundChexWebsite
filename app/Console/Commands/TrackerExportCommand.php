@@ -45,8 +45,10 @@ class TrackerExportCommand extends Command
 
         File::ensureDirectoryExists($directory);
 
-        // Timestamped to the minute, not the day: two deploys in one afternoon
-        // should leave two restore points, not overwrite the first.
+        // Timestamped to the second, not the day: two deploys in one afternoon
+        // should leave two restore points, not overwrite the first. The format
+        // is also lexically sortable, which is what lets prune() below order
+        // by filename instead of trusting mtimes a deploy may have rewritten.
         $path = $directory.'/tracker-'.now()->format('Y-m-d_His').'.json';
 
         File::put($path, $json);

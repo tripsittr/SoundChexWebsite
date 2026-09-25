@@ -45,3 +45,17 @@ with conflict handling is a separate piece of work.
 `storage/backups` is gitignored. The copy meant for git is the one downloaded
 from the panel and committed deliberately, not whatever the last deploy left on
 the server.
+
+## Self-review
+
+Two things came out of reading it back. The timestamp comment said "to the
+minute" while the format string was to the second — the comment was wrong, not
+the code, and it now also records *why* the format matters (it is lexically
+sortable, which is what lets pruning order by filename rather than trust mtimes
+a deploy may have rewritten).
+
+The second is a test. `prune()` runs unattended on every deploy and works by
+globbing a directory and deleting, so its blast radius is worth pinning down:
+an operator's own file sitting alongside the snapshots must survive. Widening
+the glob to `/*` makes that test fail, which is the check that it is testing
+something real.
