@@ -47,12 +47,19 @@
             @endphp
             <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 @foreach ($platforms as $platform)
-                    <div class="flex flex-col items-center gap-1 rounded-xl border border-base-600 bg-base-700 px-4 py-5">
-                        <span class="text-center font-semibold text-ink-100">{{ $platform->name }}</span>
+                    <div class="flex flex-col items-center gap-2 rounded-xl border border-base-600 bg-base-700 px-4 py-4">
+                        <x-platform-icon
+                            :name="$platform->name"
+                            @class([
+                                'h-6 w-6',
+                                'text-ink-100' => $platform->available,
+                                'text-ink-500/70' => ! $platform->available,
+                            ]) />
+                        <span class="text-center text-sm font-semibold text-ink-100">{{ $platform->name }}</span>
                         @if ($platform->available)
-                            <a href="{{ route('download') }}" class="text-sm font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
+                            <a href="{{ route('download') }}" class="text-xs font-medium text-accent transition-colors hover:text-accent-hot">Download</a>
                         @else
-                            <span class="text-sm text-ink-500">Coming soon</span>
+                            <span class="text-xs text-ink-500">Coming soon</span>
                         @endif
                     </div>
                 @endforeach
@@ -74,14 +81,21 @@
         </p>
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ([
-                ['One catalogue, four media types', 'Music, films, TV and books in a single library with one search box and one player — resume anything, anywhere.'],
-                ['Metadata that fills itself in', 'Nine sources asked in turn — TMDB, MusicBrainz, AcoustID, Open Library, iTunes, Spotify, OpenSubtitles and your files\' own tags. Every run is snapshotted and reversible.'],
-                ['Search that reaches inside things', 'One query across titles, cast, film dialogue and the text of books. A dialogue hit jumps to the moment it is spoken; a book hit opens at the page.'],
-                ['Reading and watching, not just listening', 'EPUB, PDF and CBZ with highlights, private notes and OCR. Video with hardware transcoding, caption tracks and skip markers.'],
-                ['Works offline', 'The whole catalogue mirrors to your device, so browsing, search and playback of downloads work with no network at all. Downloads survive the app closing.'],
-                ['Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
-            ] as [$title, $body])
-                <div class="rounded-xl border border-base-600 bg-base-700 p-6">
+                ['catalogue', 'One catalogue, four media types', 'Music, films, TV and books in a single library with one search box and one player — resume anything, anywhere.'],
+                ['metadata', 'Metadata that fills itself in', 'Nine sources asked in turn — TMDB, MusicBrainz, AcoustID, Open Library, iTunes, Spotify, OpenSubtitles and your files\' own tags. Every run is snapshotted and reversible.'],
+                ['search', 'Search that reaches inside things', 'One query across titles, cast, film dialogue and the text of books. A dialogue hit jumps to the moment it is spoken; a book hit opens at the page.'],
+                ['read', 'Reading and watching, not just listening', 'EPUB, PDF and CBZ with highlights, private notes and OCR. Video with hardware transcoding, caption tracks and skip markers.'],
+                ['offline', 'Works offline', 'The whole catalogue mirrors to your device, so browsing, search and playback of downloads work with no network at all. Downloads survive the app closing.'],
+                ['compatible', 'Plays well with others', 'Files organised the way Plex, Jellyfin and Emby already read — Artist/Album, Title (Year), Series/Season 01 — so your library stays legible to anything else.'],
+            ] as [$icon, $title, $body])
+                <div class="flex h-full flex-col rounded-xl border border-base-600 bg-base-700 p-6">
+                    {{-- Fixed-height illustration well, so every card's art sits in
+                         the same vertical space whatever its aspect ratio — which
+                         also lines the titles up across the row. The text starts at
+                         that same height; any extra space falls below it. --}}
+                    <div class="mb-6 flex h-32 items-center justify-center">
+                        <x-feature-illustration :name="$icon" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                    </div>
                     <h3 class="font-semibold text-ink-100">{{ $title }}</h3>
                     <p class="mt-2 text-sm leading-relaxed text-ink-300">{{ $body }}</p>
                 </div>
@@ -92,6 +106,7 @@
     {{-- Profiles --}}
     <section class="border-y border-base-600/60 bg-base-800">
         <div class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
+            <x-feature-illustration name="profiles" class="mx-auto mb-8 flex h-32 justify-center sm:h-40 [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
             <h2 class="text-2xl font-bold tracking-tight text-ink-100 sm:text-3xl">A profile for every person in the house</h2>
             <p class="mx-auto mt-4 max-w-2xl text-ink-300">
                 Per-person history, resume points and watchlists — and a kids mode that caps ratings
@@ -106,8 +121,11 @@
         <p class="mx-auto mt-4 max-w-2xl text-center text-ink-300">
             Every feature, every platform, AGPLv3-licensed. Pay only if you want us to handle the networking.
         </p>
-        <div class="mx-auto mt-12 grid max-w-4xl gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-base-600 bg-base-700 p-8">
+        <div class="mx-auto mt-12 grid max-w-4xl items-stretch gap-6 lg:grid-cols-2">
+            <div class="flex h-full flex-col rounded-2xl border border-base-600 bg-base-700 p-8">
+                <div class="mb-6 flex h-28 items-center justify-center">
+                    <x-feature-illustration name="self-hosted" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                </div>
                 <h3 class="text-xl font-bold text-ink-100">Self-hosted</h3>
                 <p class="mt-1 text-3xl font-extrabold text-ink-100">Free <span class="text-base font-medium text-ink-500">forever</span></p>
                 <ul class="mt-6 space-y-3 text-sm text-ink-300">
@@ -115,10 +133,13 @@
                     <li class="flex gap-2"><span class="text-accent">✓</span> Remote access your way: Tailscale, reverse proxy, VPN, anything</li>
                     <li class="flex gap-2"><span class="text-accent">✓</span> AGPLv3-licensed source on GitHub</li>
                 </ul>
-                <a href="#download" class="mt-8 inline-block rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-600">Get started</a>
+                <a href="#download" class="mt-8 inline-block self-start rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-600">Get started</a>
             </div>
-            <div class="relative rounded-2xl border border-accent/40 bg-base-700 p-8">
+            <div class="relative flex h-full flex-col rounded-2xl border border-accent/40 bg-base-700 p-8">
                 <span class="absolute -top-3 right-6 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">Coming soon</span>
+                <div class="mb-6 flex h-28 items-center justify-center">
+                    <x-feature-illustration name="scnet" class="flex h-full w-full justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
+                </div>
                 <h3 class="text-xl font-bold text-ink-100">SCNet <span class="ml-1 text-sm font-medium text-ink-500">— the SoundChex Network</span></h3>
                 <p class="mt-1 text-3xl font-extrabold text-ink-100">Subscription</p>
                 <ul class="mt-6 space-y-3 text-sm text-ink-300">
@@ -147,23 +168,24 @@
                         AGPLv3 licensed. The code is public, the roadmap is public, the issues are public.
                         If SoundChex is useful to you, a donation keeps it free for everyone.
                     </p>
-                    <div class="mt-6 flex flex-wrap gap-4">
-                        <a href="https://github.com/sponsors/tripsittr" class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hot">Sponsor on GitHub</a>
-                        <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
-                    </div>
-                </div>
-                <div class="min-w-0 rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
-                    <p class="mb-3 font-sans text-xs font-semibold tracking-wide text-ink-500 uppercase">Up and running in six lines</p>
-                    <pre class="overflow-x-auto"><code>git clone https://github.com/tripsittr/SoundChex.git
+                    <div class="mt-6 min-w-0 rounded-xl border border-base-600 bg-base-900 p-6 font-mono text-sm leading-relaxed text-ink-300">
+                        <p class="mb-3 font-sans text-xs font-semibold tracking-wide text-ink-500 uppercase">Up and running in six lines</p>
+                        <pre class="overflow-x-auto"><code>git clone https://github.com/tripsittr/SoundChex.git
 cd SoundChex
 composer install &amp;&amp; npm install
 cp .env.example .env &amp;&amp; php artisan key:generate
 php artisan migrate &amp;&amp; php artisan storage:link
 npm run build &amp;&amp; php artisan serve</code></pre>
-                    <p class="mt-3 font-sans text-sm">
-                        <a href="{{ route('docs.show', 'quick-start') }}" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
-                    </p>
+                        <p class="mt-3 font-sans text-sm">
+                            <a href="{{ route('docs.show', 'quick-start') }}" class="text-accent transition-colors hover:text-accent-hot">Full install guide →</a>
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-4">
+                        <a href="https://github.com/sponsors/tripsittr" class="rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hot">Sponsor on GitHub</a>
+                        <a href="https://github.com/tripsittr/SoundChex" class="rounded-lg border border-base-500 px-5 py-2.5 text-sm font-semibold text-ink-100 transition-colors hover:border-ink-500 hover:bg-base-700">Star the repo</a>
+                    </div>
                 </div>
+                <x-feature-illustration name="open-source" class="flex h-56 justify-center [&_svg]:h-full [&_svg]:w-auto [&_svg]:max-w-full" />
             </div>
         </div>
     </section>
