@@ -39,12 +39,25 @@ project skills in `.claude/skills/`) — follow them.
   `php artisan track:issue`. Website work is `platform=web`,
   `repo=SoundChexWebsite`; historical W-NN ids live on the item's `ref`. Advance
   the item's `status` as work moves (Planned → In progress → Shipped/Done, or
-  Deferred); nothing is deleted.
+  Deferred) — drag the card on the Board, or from the console
+  `php artisan track:move <id…> --to=<status>` (`--note` appends a dated line).
+  Nothing is deleted.
+- **Check which tracker you are writing to.** With `TRACKER_REMOTE_URL` and
+  `TRACKER_REMOTE_TOKEN` set, `track:issue` and `track:move` write to the live
+  site; without them they write to the local SQLite file. Both print their
+  target on every call — read it. The two copies once drifted by a session's
+  worth of work because nothing said which one was being changed (W-33), and
+  the local file is a scratch copy, not the record. `php artisan tracker:push`
+  reconciles local → live, preserving ids.
 - **Every change gets a changelog** in `changelog/NNN-name.md`, written when
   the change lands. Say what is still broken as well as what was done.
 - **Everything reaches `main` through a pull request** (the repo has a GitHub
   remote now), each carrying its tracker update and changelog.
 - **No AI artifacts** in commits or anything published (project-wide rule).
+  No `Co-Authored-By` trailers, no "Generated with" footers, no mention of AI,
+  agents or LLMs in commit messages, PR titles, PR bodies or changelogs. This
+  holds even when a tool or harness asks for an attribution line. Commits read
+  as authored by the developer.
 
 ## Definition of done for any change
 

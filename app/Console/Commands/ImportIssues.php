@@ -56,9 +56,10 @@ class ImportIssues extends Command
                 continue;
             }
 
+            $text = file_get_contents($path);
             $rows = $src['format'] === 'table'
-                ? $this->parseTable(file_get_contents($path))
-                : $this->parseBullets(file_get_contents($path));
+                ? $this->parseTable($text)
+                : $this->parseBullets($text);
 
             $count = 0;
             foreach ($rows as $row) {
@@ -73,8 +74,9 @@ class ImportIssues extends Command
                 ];
 
                 if (! $dry) {
-                    // updateOrCreate on ref; do NOT touch published/public_summary/
-                    // sort_order so panel edits survive a re-import.
+                    // Match on ref, then fill only the import fields — do NOT
+                    // touch published/public_summary/sort_order, so panel edits
+                    // survive a re-import.
                     $item = Item::firstOrNew(['ref' => $row['ref']]);
                     $item->fill($data);
                     $item->save();
@@ -132,7 +134,8 @@ class ImportIssues extends Command
         $status = 'planned';
         $out = [];
         $lines = explode("\n", $text);
-        for ($i = 0; $i < count($lines); $i++) {
+        $lineCount = count($lines);
+        for ($i = 0; $i < $lineCount; $i++) {
             $line = $lines[$i];
             if (preg_match('/^##\s+(.+)$/', trim($line), $m)) {
                 $status = $this->sectionStatus($m[1]);
@@ -146,7 +149,7 @@ class ImportIssues extends Command
             $title = trim($m[2]);
             $notes = trim($m[3]);
             // Gather continuation lines (indented, until the next bullet/heading).
-            while ($i + 1 < count($lines) && preg_match('/^\s+\S/', $lines[$i + 1]) && ! preg_match('/^-\s+\*\*/', trim($lines[$i + 1]))) {
+            while ($i + 1 < $lineCount && preg_match('/^\s+\S/', $lines[$i + 1]) && ! preg_match('/^-\s+\*\*/', trim($lines[$i + 1]))) {
                 $notes .= ' '.trim($lines[++$i]);
             }
             $out[] = ['ref' => $ref, 'title' => $title, 'notes' => $notes ?: null, 'status' => $status];

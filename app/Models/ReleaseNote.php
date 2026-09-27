@@ -5,6 +5,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,11 @@ class ReleaseNote extends Model
         'version', 'title', 'platform', 'body', 'released_on', 'published', 'sort_order',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
@@ -25,8 +31,12 @@ class ReleaseNote extends Model
         ];
     }
 
-    /** Published notes, newest first (by date, then sort_order). */
-    public static function published()
+    /**
+     * Published notes, newest first (by date, then sort_order).
+     *
+     * @return Collection<int, static>
+     */
+    public static function published(): Collection
     {
         return static::query()
             ->where('published', true)

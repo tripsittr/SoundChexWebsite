@@ -53,13 +53,6 @@ class ItemResource extends Resource
         return ItemsTable::configure($table);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [

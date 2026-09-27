@@ -9,8 +9,9 @@ Then:
 
 - **The admin Tracker** (`/admin` → Tracker / Board) — every feature, fix and
   content change across all repos is tracked here now, not in `Issues.md` (a
-  pointer). Add work with `php artisan track:issue` or in the panel. See
-  [AGENTS.md](AGENTS.md).
+  pointer). Add work with `php artisan track:issue` or in the panel; advance an
+  item's status with `php artisan track:move <id…> --to=<status>` or by dragging
+  the card. See [AGENTS.md](AGENTS.md).
 - **[Documentation & Planning/Status.md](Documentation%20&%20Planning/Status.md)**
   — what exists, what does not, what is next.
 - **[changelog/](changelog/)** — one entry per change, written when it lands.

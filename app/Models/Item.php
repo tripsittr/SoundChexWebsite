@@ -5,6 +5,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,11 @@ class Item extends Model
         'activity_on',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
@@ -109,12 +115,24 @@ class Item extends Model
         return str($this->description ?? '')->limit(180)->toString();
     }
 
-    /** Published, roadmap-visible items, grouped and ordered for the public page. */
-    public static function publishedForRoadmap()
+    /**
+     * The statuses the public roadmap shows. `done` and `deferred` are
+     * deliberately absent: `done` is the internal closed state (see the note on
+     * STATUSES) and deferred work is not a commitment worth publishing.
+     */
+    public const ROADMAP_STATUSES = ['planned', 'in-progress', 'available'];
+
+    /**
+     * Published, roadmap-visible items, ordered for the public page. The view
+     * groups the result by platform; grouping preserves this order within each.
+     *
+     * @return Collection<int, static>
+     */
+    public static function publishedForRoadmap(): Collection
     {
         return static::query()
             ->where('published', true)
-            ->whereIn('status', ['planned', 'in-progress', 'available'])
+            ->whereIn('status', self::ROADMAP_STATUSES)
             ->orderBy('sort_order')
             ->orderBy('title')
             ->get();

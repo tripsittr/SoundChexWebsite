@@ -38,12 +38,18 @@ class WaitlistSignupsTable
                     ->icon('heroicon-o-arrow-down-tray')
                     ->action(fn (): StreamedResponse => response()->streamDownload(function () {
                         $out = fopen('php://output', 'w');
-                        fputcsv($out, ['email', 'signed_up_at']);
+
+                        // `escape: ''` is both the RFC-4180 behaviour and what
+                        // PHP 9 makes the default; passing it explicitly silences
+                        // the 8.4 deprecation and pins the output either way.
+                        fputcsv($out, ['email', 'signed_up_at'], escape: '');
+
                         WaitlistSignup::orderBy('created_at')->chunk(500, function ($rows) use ($out) {
                             foreach ($rows as $row) {
-                                fputcsv($out, [$row->email, $row->created_at?->toIso8601String()]);
+                                fputcsv($out, [$row->email, $row->created_at?->toIso8601String()], escape: '');
                             }
                         });
+
                         fclose($out);
                     }, 'soundchex-waitlist-'.now()->format('Y-m-d').'.csv')),
             ])

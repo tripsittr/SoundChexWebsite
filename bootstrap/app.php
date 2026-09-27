@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        // The tracker API (W-33): token-authed, so the CLI on any machine
+        // writes to the live tracker rather than to a local copy of it.
+        api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )

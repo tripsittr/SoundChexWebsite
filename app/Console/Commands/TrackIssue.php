@@ -6,7 +6,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Item;
+use App\Services\TrackerClient;
 use Illuminate\Console\Command;
+use RuntimeException;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\select;
@@ -44,14 +46,16 @@ class TrackIssue extends Command
         $title = $this->argument('title')
             ?: text('Title', required: true);
 
+        // `resolve` reports the bad value itself and returns null, which is also
+        // what an unanswered optional prompt gives — so each one is checked here.
         $platform = $this->resolve('platform', Item::PLATFORMS, $interactive, 'Platform');
-        if ($platform === null) {
-            return self::FAILURE;
-        }
-
         $type = $this->resolve('type', Item::TYPES, $interactive, 'Type', 'todo');
         $status = $this->resolve('status', Item::STATUSES, $interactive, 'Status', 'planned');
         $priority = $this->resolve('priority', Item::PRIORITIES, $interactive, 'Priority', 'normal');
+
+        if ($platform === null || $type === null || $status === null || $priority === null) {
+            return self::FAILURE;
+        }
 
         $repo = $this->option('repo');
         if ($interactive && ! $repo) {
@@ -60,6 +64,17 @@ class TrackIssue extends Command
                 ['' => '— none —'] + Item::REPOS,
                 default: '',
             ) ?: null;
+        }
+
+        // Validated like every other enum flag. `repo` stayed unchecked for a
+        // while and a typo simply stored a bad value — nothing reads it back
+        // against the list, so the item just quietly belonged to no repo.
+        // Empty stays allowed: the column is nullable and a cross-cutting item
+        // genuinely has no single repo.
+        if ($repo !== null && $repo !== '' && ! array_key_exists($repo, Item::REPOS)) {
+            $this->error("Invalid repo: {$repo}. One of: ".implode(', ', array_keys(Item::REPOS)));
+
+            return self::FAILURE;
         }
 
         $description = $this->option('description')
@@ -74,34 +89,36 @@ class TrackIssue extends Command
         $summary = $this->option('summary')
             ?: ($publish && $interactive ? text('Public roadmap blurb (optional)') : null);
 
-        // Validate the enum options passed via flags.
-        foreach ([['type', Item::TYPES], ['status', Item::STATUSES], ['priority', Item::PRIORITIES]] as [$field, $set]) {
-            $val = $$field;
-            if (! array_key_exists($val, $set)) {
-                $this->error("Invalid {$field}: {$val}. One of: ".implode(', ', array_keys($set)));
+        $client = TrackerClient::fromConfig();
 
-                return self::FAILURE;
-            }
+        try {
+            $item = $client->create([
+                'title' => $title,
+                'description' => $description ?: null,
+                'platform' => $platform,
+                'repo' => $repo ?: null,
+                'type' => $type,
+                'status' => $status,
+                'priority' => $priority,
+                'ref' => $ref ?: null,
+                'public_summary' => $summary ?: null,
+                'published' => $publish,
+            ]);
+        } catch (RuntimeException $e) {
+            $this->error($e->getMessage());
+
+            return self::FAILURE;
         }
 
-        $item = Item::create([
-            'title' => $title,
-            'description' => $description ?: null,
-            'platform' => $platform,
-            'repo' => $repo ?: null,
-            'type' => $type,
-            'status' => $status,
-            'priority' => $priority,
-            'ref' => $ref ?: null,
-            'public_summary' => $summary ?: null,
-            'published' => $publish,
-            'sort_order' => (int) Item::where('platform', $platform)->max('sort_order') + 1,
-        ]);
+        $this->info("Tracked #{$item['id']}: {$item['title']}");
+        $this->line('  '.Item::PLATFORMS[$item['platform']]." · {$item['type']} · {$item['status']}".
+            ($item['ref'] ? " · {$item['ref']}" : '').
+            ($item['published'] ? ' · on roadmap' : ' · internal'));
 
-        $this->info("Tracked #{$item->id}: {$item->title}");
-        $this->line("  {$item->platformLabel()} · {$item->type} · {$item->status}".
-            ($item->ref ? " · {$item->ref}" : '').
-            ($item->published ? ' · on roadmap' : ' · internal'));
+        // Always said, never inferred. The local and live trackers drifted
+        // apart precisely because nothing announced which one was being
+        // written to (W-33).
+        $this->line("  <fg=gray>→ {$client->target()}</>");
 
         return self::SUCCESS;
     }
@@ -116,13 +133,13 @@ class TrackIssue extends Command
     {
         $value = $this->option($option);
 
-        if ($value && ! array_key_exists($value, $set)) {
-            $this->error("Invalid {$option}: {$value}. One of: ".implode(', ', array_keys($set)));
-
-            return null;
-        }
-
         if ($value) {
+            if (! array_key_exists($value, $set)) {
+                $this->error("Invalid {$option}: {$value}. One of: ".implode(', ', array_keys($set)));
+
+                return null;
+            }
+
             return $value;
         }
 

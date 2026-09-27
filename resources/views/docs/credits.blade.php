@@ -18,8 +18,8 @@
     <p class="doc-lead">
         SoundChex stands on the work of hundreds of open-source projects and the people and companies
         who build them. This page credits every third-party dependency we ship — {{ number_format($total) }}
-        packages across PHP, JavaScript and Rust — with its licence. Thank you to everyone whose work
-        is listed here.
+        packages across PHP, JavaScript and Rust, plus the binaries bundled inside the app itself —
+        with its licence. Thank you to everyone whose work is listed here.
     </p>
 
     <h2>Built on</h2>
@@ -80,16 +80,21 @@
                         @foreach ($eco['packages'] as $pkg)
                             @php
                                 $license = implode(', ', $pkg['license'] ?: ['—']);
-                                $link = str_contains($eco['name'], 'Composer')
+                                // Bundled binaries carry their own link — they are
+                                // not on any package registry.
+                                $link = $pkg['url'] ?? (str_contains($eco['name'], 'Composer')
                                     ? 'https://packagist.org/packages/' . $pkg['name']
                                     : (str_contains($eco['name'], 'npm')
                                         ? 'https://www.npmjs.com/package/' . $pkg['name']
-                                        : 'https://crates.io/crates/' . $pkg['name']);
+                                        : 'https://crates.io/crates/' . $pkg['name']));
                             @endphp
                             <tr class="border-t border-base-700/50 align-top">
                                 <td class="py-2 pr-4">
                                     <a href="{{ $link }}" target="_blank" rel="noopener"
                                        class="font-medium text-ink-200 hover:text-accent">{{ $pkg['name'] }}</a>
+                                    @if (! empty($pkg['note']))
+                                        <span class="mt-0.5 block max-w-prose text-xs font-normal text-ink-500">{{ $pkg['note'] }}</span>
+                                    @endif
                                 </td>
                                 <td class="py-2 pr-4 whitespace-nowrap text-ink-500">{{ $pkg['version'] }}</td>
                                 <td class="py-2 pr-4 text-ink-400">{{ $license }}</td>

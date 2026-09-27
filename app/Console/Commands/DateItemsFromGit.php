@@ -76,11 +76,13 @@ class DateItemsFromGit extends Command
 
         foreach ($this->repos as $repo) {
             $path = base_path($repo);
-            if (! is_dir($path.'/.git') && ! is_dir($path.'/../.git')) {
-                // A sibling repo may not be a checkout in every environment.
-                if (! is_dir($path)) {
-                    continue;
-                }
+
+            // A sibling repo may not be a checkout in every environment. A
+            // directory that exists but is not a repo is still fine to try:
+            // `git log` fails there and the unsuccessful-result check below
+            // skips it.
+            if (! is_dir($path)) {
+                continue;
             }
 
             // -S finds commits that add/remove the literal ref; --diff-filter
@@ -96,7 +98,7 @@ class DateItemsFromGit extends Command
 
             $lines = array_values(array_filter(
                 explode("\n", trim($result->output())),
-                fn (string $l) => $l !== '',
+                fn (string $line) => $line !== '',
             ));
 
             if ($lines !== []) {
@@ -104,12 +106,7 @@ class DateItemsFromGit extends Command
             }
         }
 
-        if ($dates === []) {
-            return null;
-        }
-
-        sort($dates); // earliest first
-
-        return $dates[0];
+        // ISO dates sort lexically, so the smallest string is the earliest date.
+        return $dates === [] ? null : min($dates);
     }
 }

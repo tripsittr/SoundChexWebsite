@@ -5,6 +5,7 @@
 
 namespace App\Filament\Resources\Platforms\Tables;
 
+use App\Models\Platform;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -27,8 +28,14 @@ class PlatformsTable
                     ->label('Available')
                     ->onColor('success'),
 
-                IconColumn::make('available')
+                // A read-only preview of what the home grid renders for this
+                // row. It shows `available` too, but must NOT be named
+                // `available`: Filament keys its column map by name, so a second
+                // column of that name displaces the ToggleColumn above in the
+                // map (both still render, but only the last one is addressable).
+                IconColumn::make('home_shows')
                     ->label('Home shows')
+                    ->getStateUsing(fn (Platform $record): bool => $record->available)
                     ->trueIcon('heroicon-o-arrow-down-tray')
                     ->falseIcon('heroicon-o-clock')
                     ->trueColor('success')
