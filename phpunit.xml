@@ -19,6 +19,13 @@
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <!-- The tracker CLI writes to the live site when a remote is
+             configured (W-33). In a test that means the suite mutating the
+             real tracker and asserting against a database it never touched —
+             so the remote is cleared here rather than relying on whoever runs
+             the tests not having it set. -->
+        <env name="TRACKER_REMOTE_URL" value=""/>
+        <env name="TRACKER_REMOTE_TOKEN" value=""/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
