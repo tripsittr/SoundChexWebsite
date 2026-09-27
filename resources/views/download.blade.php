@@ -7,6 +7,31 @@
             and published on GitHub Releases — no accounts, no installers-of-installers.
         </p>
 
+        @php
+            // Pinned to the tag rather than `releases/latest`, which GitHub
+            // does not point at pre-releases (S-421).
+            $clientBase = 'https://github.com/tripsittr/SoundChex/releases/tag/client-v0.2.0-beta.1';
+        @endphp
+
+        {{-- Said once, plainly, above everything it applies to. A badge on a
+             row is easy to miss; the warnings these builds produce are not. --}}
+        <div class="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/10 p-5">
+            <h2 class="text-sm font-bold text-amber-200">0.2.0 “Rough Cut” — beta</h2>
+            <p class="mt-1 text-sm leading-relaxed text-amber-100/90">
+                The first public build. <strong>macOS is used daily; Windows and
+                Linux compile in CI and have not yet been run on those systems</strong> —
+                they are here to be tested, not relied on.
+            </p>
+            <p class="mt-2 text-sm leading-relaxed text-amber-100/90">
+                Nothing is code-signed yet, so both systems will warn you.
+                macOS reports the app as <em>damaged</em>: right-click it and
+                choose Open, or run
+                <code class="rounded bg-black/30 px-1">xattr -dr com.apple.quarantine</code>
+                on it. Windows shows “Windows protected your PC” — choose
+                More&nbsp;info, then Run&nbsp;anyway.
+            </p>
+        </div>
+
         <div class="mt-10 grid gap-6 lg:grid-cols-2">
             {{-- The client --}}
             <div class="rounded-2xl border border-base-600 bg-base-700 p-8">
@@ -15,15 +40,21 @@
                 <ul class="mt-6 space-y-3 text-sm">
                     <li class="flex items-center justify-between gap-4 border-b border-base-600/60 pb-3">
                         <span class="text-ink-100">macOS <span class="text-ink-500">(.dmg)</span></span>
-                        <a href="https://github.com/tripsittr/SoundChex/releases/latest" class="rounded-lg bg-accent px-4 py-1.5 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
+                        <a href="{{ $clientBase }}" class="rounded-lg bg-accent px-4 py-1.5 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
                     </li>
                     <li class="flex items-center justify-between gap-4 border-b border-base-600/60 pb-3">
-                        <span class="text-ink-100">Windows <span class="text-ink-500">(.exe)</span></span>
-                        <span class="text-ink-500">Coming soon</span>
+                        <span class="text-ink-100">Windows <span class="text-ink-500">(.msi)</span></span>
+                        <span class="flex items-center gap-2">
+                            <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-300" title="Builds in CI; not yet run on Windows">Untested</span>
+                            <a href="{{ $clientBase }}" class="rounded-lg bg-accent px-4 py-1.5 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
+                        </span>
                     </li>
                     <li class="flex items-center justify-between gap-4 border-b border-base-600/60 pb-3">
-                        <span class="text-ink-100">Linux <span class="text-ink-500">(.deb / .rpm / .AppImage)</span></span>
-                        <span class="text-ink-500">Coming soon</span>
+                        <span class="text-ink-100">Linux <span class="text-ink-500">(.deb / .AppImage)</span></span>
+                        <span class="flex items-center gap-2">
+                            <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-300" title="Builds in CI; not yet run on Linux">Untested</span>
+                            <a href="{{ $clientBase }}" class="rounded-lg bg-accent px-4 py-1.5 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
+                        </span>
                     </li>
                     <li class="flex items-center justify-between gap-4 border-b border-base-600/60 pb-3">
                         <span class="text-ink-100">iOS / iPadOS</span>
@@ -70,13 +101,21 @@
 
         {{-- The bundled runtime — plug-and-play server, no PHP/Herd needed (S-151) --}}
         @php
-            $runtimeBase = 'https://github.com/tripsittr/SoundChex/releases/latest/download';
+            // Pinned to the beta tag, not `releases/latest`: GitHub excludes
+            // pre-releases from "latest", so those links 404 while the only
+            // release is a beta (S-421).
+            $serverTag = 'server-v0.2.0-beta.1';
+            $runtimeBase = "https://github.com/tripsittr/SoundChex/releases/download/{$serverTag}";
+
+            // `tested` is not `ready`. A runtime can build and be downloadable
+            // without anyone having run it, and saying otherwise on a public
+            // page is a promise the project cannot keep.
             $runtimes = [
-                ['os' => 'macOS', 'arch' => 'Apple silicon', 'file' => 'soundchex-server-macos-aarch64.tar.gz', 'ready' => true],
-                ['os' => 'macOS', 'arch' => 'Intel', 'file' => 'soundchex-server-macos-x86_64.tar.gz', 'ready' => false],
-                ['os' => 'Linux', 'arch' => 'x86_64', 'file' => 'soundchex-server-linux-x86_64.tar.gz', 'ready' => false],
-                ['os' => 'Linux', 'arch' => 'ARM64', 'file' => 'soundchex-server-linux-aarch64.tar.gz', 'ready' => false],
-                ['os' => 'Windows', 'arch' => 'x86_64', 'file' => 'soundchex-server-windows-x86_64.zip', 'ready' => false],
+                ['os' => 'macOS', 'arch' => 'Apple silicon', 'file' => 'soundchex-server-macos-aarch64.tar.gz', 'ready' => true, 'tested' => true],
+                ['os' => 'macOS', 'arch' => 'Intel', 'file' => 'soundchex-server-macos-x86_64.tar.gz', 'ready' => false, 'tested' => false],
+                ['os' => 'Linux', 'arch' => 'x86_64', 'file' => 'soundchex-server-linux-x86_64.tar.gz', 'ready' => true, 'tested' => false],
+                ['os' => 'Linux', 'arch' => 'ARM64', 'file' => 'soundchex-server-linux-aarch64.tar.gz', 'ready' => true, 'tested' => false],
+                ['os' => 'Windows', 'arch' => 'x86_64', 'file' => 'soundchex-server-windows-x86_64.zip', 'ready' => true, 'tested' => false],
             ];
         @endphp
         <div class="mt-10 rounded-2xl border border-base-600 bg-base-700 p-8">
@@ -95,6 +134,9 @@
                     <li class="flex items-center justify-between gap-4 rounded-lg border border-base-600/60 bg-base-800/50 px-4 py-3 text-sm">
                         <span class="text-ink-100">{{ $rt['os'] }} <span class="text-ink-500">({{ $rt['arch'] }})</span></span>
                         @if ($rt['ready'])
+                            @unless ($rt['tested'])
+                                <span class="rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-300" title="Builds in CI; not yet run on this operating system">Untested</span>
+                            @endunless
                             <a href="{{ $runtimeBase }}/{{ $rt['file'] }}" class="rounded-lg bg-accent px-4 py-1.5 font-semibold text-white transition-colors hover:bg-accent-hot">Download</a>
                         @else
                             <span class="text-ink-500">Building in CI</span>
