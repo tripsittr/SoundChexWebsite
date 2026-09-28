@@ -1,4 +1,4 @@
-<x-legal.app-privacy platform="Windows" :available="false">
+<x-legal.app-privacy platform="Windows">
     <x-slot:storage>
         <p>On Windows this data will live under your user profile (<code>%APPDATA%</code> and <code>%LOCALAPPDATA%</code>), protected by your Windows account like any per-user app data. Nothing is written outside it, and nothing goes to the registry beyond standard install entries.</p>
     </x-slot:storage>

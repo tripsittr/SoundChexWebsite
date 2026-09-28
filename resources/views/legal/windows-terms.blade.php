@@ -1,4 +1,4 @@
-<x-legal.app-terms platform="Windows" :available="false">
+<x-legal.app-terms platform="Windows">
     <h2>5. Windows specifics</h2>
     <ul>
         <li>These terms are published ahead of the Windows app's release so they are on record from day one; they take practical effect when the installer ships on the <a href="{{ route('download') }}">download page</a>.</li>

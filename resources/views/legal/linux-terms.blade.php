@@ -1,4 +1,4 @@
-<x-legal.app-terms platform="Linux" :available="false">
+<x-legal.app-terms platform="Linux">
     <h2>5. Linux specifics</h2>
     <ul>
         <li>These terms are published ahead of the Linux app's release; they take practical effect when packages (<code>.deb</code>, <code>.rpm</code>, <code>.AppImage</code>) ship on the <a href="{{ route('download') }}">download page</a>.</li>

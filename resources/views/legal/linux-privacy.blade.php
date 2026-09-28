@@ -1,4 +1,4 @@
-<x-legal.app-privacy platform="Linux" :available="false">
+<x-legal.app-privacy platform="Linux">
     <x-slot:storage>
         <p>On Linux this data will live in your home directory under the XDG paths (<code>~/.config</code> and <code>~/.local/share</code>), owned by your user like any per-user app data. Nothing is written outside them.</p>
     </x-slot:storage>
