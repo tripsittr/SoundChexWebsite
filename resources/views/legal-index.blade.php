@@ -51,6 +51,7 @@
                     <ul class="mt-4 space-y-1.5 text-sm">
                         <li><a href="{{ route('legal.show', $slug.'-terms') }}" class="text-accent hover:text-accent-hot">Terms →</a></li>
                         <li><a href="{{ route('legal.show', $slug.'-privacy') }}" class="text-accent hover:text-accent-hot">Privacy →</a></li>
+                        <li><a href="{{ route('legal.show', $slug.'-accessibility') }}" class="text-accent hover:text-accent-hot">Accessibility →</a></li>
                     </ul>
                 </div>
             @endforeach
