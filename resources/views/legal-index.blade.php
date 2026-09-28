@@ -21,6 +21,7 @@
                     <li><a href="{{ route('legal.show', 'website-terms') }}" class="text-accent hover:text-accent-hot">Terms of Use →</a></li>
                     <li><a href="{{ route('legal.show', 'website-privacy') }}" class="text-accent hover:text-accent-hot">Privacy Policy →</a></li>
                     <li><a href="{{ route('legal.show', 'cookies') }}" class="text-accent hover:text-accent-hot">Cookie Policy →</a></li>
+                    <li><a href="{{ route('legal.show', 'age-suitability') }}" class="text-accent hover:text-accent-hot">Age Suitability →</a></li>
                 </ul>
             </div>
             <div class="rounded-xl border border-base-600 bg-base-700 p-6">

@@ -4,6 +4,7 @@
             'website-terms' => 'Terms of Use',
             'website-privacy' => 'Privacy Policy',
             'cookies' => 'Cookie Policy',
+            'age-suitability' => 'Age Suitability',
         ],
         'SoundChex Server' => [
             'server-terms' => 'Server Terms',
