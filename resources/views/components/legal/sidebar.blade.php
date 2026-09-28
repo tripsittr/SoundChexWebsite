@@ -13,26 +13,32 @@
         'macOS app' => [
             'macos-terms' => 'Terms',
             'macos-privacy' => 'Privacy',
+            'macos-accessibility' => 'Accessibility',
         ],
         'Windows app' => [
             'windows-terms' => 'Terms',
             'windows-privacy' => 'Privacy',
+            'windows-accessibility' => 'Accessibility',
         ],
         'Linux app' => [
             'linux-terms' => 'Terms',
             'linux-privacy' => 'Privacy',
+            'linux-accessibility' => 'Accessibility',
         ],
         'iOS app' => [
             'ios-terms' => 'Terms',
             'ios-privacy' => 'Privacy',
+            'ios-accessibility' => 'Accessibility',
         ],
         'iPadOS app' => [
             'ipados-terms' => 'Terms',
             'ipados-privacy' => 'Privacy',
+            'ipados-accessibility' => 'Accessibility',
         ],
         'Android app' => [
             'android-terms' => 'Terms',
             'android-privacy' => 'Privacy',
+            'android-accessibility' => 'Accessibility',
         ],
     ];
     $current = request()->route('slug');

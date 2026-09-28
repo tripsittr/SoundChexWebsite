@@ -61,6 +61,62 @@ class LegalPagesTest extends TestCase
             ->assertSee('zero trackers and zero analytics');
     }
 
+    /** @var list<string> */
+    private const ACCESSIBILITY = [
+        'macos-accessibility',
+        'windows-accessibility',
+        'linux-accessibility',
+        'ios-accessibility',
+        'ipados-accessibility',
+        'android-accessibility',
+    ];
+
+    public function test_every_platform_has_an_accessibility_statement(): void
+    {
+        $hub = $this->get(route('legal'))->assertOk();
+
+        foreach (self::ACCESSIBILITY as $slug) {
+            $hub->assertSee(route('legal.show', $slug));
+
+            $this->get(route('legal.show', $slug))
+                ->assertOk()
+                ->assertSee('Tripsittr LLC');
+        }
+    }
+
+    /**
+     * An accessibility statement is a factual report on the software, not a
+     * contract, so it must not carry the "draft pending legal review" stamp
+     * the policies do — that would misdescribe what it is (S-444).
+     */
+    public function test_accessibility_statements_are_not_marked_as_draft_policies(): void
+    {
+        foreach (self::ACCESSIBILITY as $slug) {
+            $this->get(route('legal.show', $slug))
+                ->assertOk()
+                ->assertDontSee('Draft pending legal review')
+                ->assertSee('Last checked');
+        }
+    }
+
+    /**
+     * The one claim that must never drift.
+     *
+     * Audio descriptions are unsupported on every platform: the server cannot
+     * expose a described audio track and no client can select one. Declaring
+     * support for an accommodation that does not exist wastes the time of the
+     * person least able to spare it, so every page has to say so plainly
+     * until it is built (S-443).
+     */
+    public function test_no_page_claims_audio_descriptions(): void
+    {
+        foreach (self::ACCESSIBILITY as $slug) {
+            $this->get(route('legal.show', $slug))
+                ->assertOk()
+                ->assertSee('Not supported', escape: false);
+        }
+    }
+
     public function test_old_policy_urls_redirect(): void
     {
         $this->get('/privacy')->assertRedirect('/legal/website-privacy');

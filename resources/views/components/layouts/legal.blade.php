@@ -1,4 +1,7 @@
-@props(['title', 'updated' => 'September 23, 2026'])
+@props(['title', 'updated' => 'September 23, 2026', 'legal' => true])
+{{-- `legal` marks a document a lawyer still has to see. An accessibility
+     statement is not that — it reports what the software does — so it would
+     be wrong to stamp it "draft pending review" (S-444). --}}
 <x-layouts.site :title="$title . ' — SoundChex Legal'" description="SoundChex legal documents — terms, privacy and cookie policies for the website, the server and each app.">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:grid lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-12">
         <aside>
@@ -20,7 +23,11 @@
                 $pdfExists = $legalSlug && file_exists(public_path("legal-pdf/{$legalSlug}.pdf"));
             @endphp
             <p class="mb-4 text-xs font-semibold tracking-wide text-ink-500 uppercase">
-                Effective {{ $updated }} · Operated by Tripsittr LLC · <span class="text-accent">Draft pending legal review</span>@if ($pdfExists) · <a href="{{ asset("legal-pdf/{$legalSlug}.pdf") }}" class="text-ink-300 underline decoration-base-500 hover:text-ink-100">PDF</a>@endif
+                {{ $legal ? 'Effective' : 'Last checked' }} {{ $updated }} · Operated by Tripsittr LLC
+                @if ($legal)
+                    · <span class="text-accent">Draft pending legal review</span>
+                @endif
+                @if ($pdfExists) · <a href="{{ asset("legal-pdf/{$legalSlug}.pdf") }}" class="text-ink-300 underline decoration-base-500 hover:text-ink-100">PDF</a>@endif
             </p>
             {{ $slot }}
         </article>
