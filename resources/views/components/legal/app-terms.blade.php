@@ -13,7 +13,7 @@
     <ul>
         <li>The app connects only to the server address you enter — a machine you (or your household) run. Tripsittr LLC operates no service the app depends on.</li>
         <li>The interface is served by your server, so its behaviour and content are your server's version of SoundChex. The binary itself carries only the connect screen and the offline shell.</li>
-        <li>Accounts, permissions and content restrictions (including kids mode) are enforced by your server, under its operator's control.</li>
+        <li>Accounts, permissions and content restrictions are enforced by your server, under its operator's control. The app provides the controls that set them — profiles, content-rating caps and PINs — but the server is what applies them, so a rule made here holds for every device signed in to that library.</li>
     </ul>
 
     <h2>3. Your media, your responsibility</h2>
